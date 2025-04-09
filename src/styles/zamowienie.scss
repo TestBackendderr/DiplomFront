@@ -1,0 +1,33 @@
+// src/styles/zamowienie.scss
+.zamowienie-container {
+    padding: 20px;
+  }
+  
+  .order-summary {
+    margin-bottom: 20px;
+  }
+  
+  .order-details {
+    margin-bottom: 20px;
+  }
+  
+  .order-details label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .order-details input,
+  .order-details select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  

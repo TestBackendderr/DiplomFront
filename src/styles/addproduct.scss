@@ -1,0 +1,34 @@
+/* src/styles/addProduct.scss */
+.add-product-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-product-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-product-container input,
+.add-product-container textarea,
+.add-product-container button {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-product-container button {
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.add-product-container button:hover {
+  background-color: #ff5722;
+}

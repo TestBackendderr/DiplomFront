@@ -1,0 +1,106 @@
+/* src/styles/navbar.scss */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 32px;
+  background-color: #fedba6;
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-logo h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  transition: transform 0.2s ease;
+}
+
+.navbar-logo:hover h1 {
+  transform: scale(1.03);
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-links span {
+  margin-right: 12px;
+  font-weight: 500;
+  color: #444;
+}
+
+.navbar-link {
+  position: relative;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+.navbar-link:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+}
+
+.navbar button {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar button:hover {
+  background-color: #f1f1f1;
+}
+
+.navbar .cart-icon {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar .cart-icon:hover {
+  background-color: #f1f1f1;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 20px;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .navbar-logo h1 {
+    font-size: 22px;
+  }
+}

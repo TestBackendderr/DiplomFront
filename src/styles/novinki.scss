@@ -1,0 +1,58 @@
+/* src/styles/novinki.scss */
+.novinki-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .novinki-card {
+    background: #fff8f1;
+    border-radius: 20px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .novinki-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  .novinki-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .novinki-card h3 {
+    margin: 10px 0 5px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .novinki-card p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .novinki-card span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f28b00;
+  }
+  
+  .loading-text {
+    color: #333;
+    font-size: 16px;
+  }
+  

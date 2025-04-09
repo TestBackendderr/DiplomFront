@@ -1,0 +1,213 @@
+$primary-color: #f8a5c2;  // Розовый для основного цвета
+$secondary-color: #ffbc5c; // Оранжево-желтый для акцентов
+$light-gray: #f9f7f1;      // Очень светлый фон
+$dark-gray: #6c6c6c;       // Серый для текста
+$text-muted: #9e9e9e;      // Мутный текст
+$border-radius: 1rem;      // Округлые углы
+$box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);  // Больше тени для выделенности
+$transition-duration: 0.3s;
+$font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+body {
+  font-family: $font-family-base;
+  margin: 0;
+  padding: 0;
+  background-color: $light-gray;
+  color: $dark-gray;
+  line-height: 1.6;
+}
+
+h1 {
+  font-size: 2.8rem;
+  color: $primary-color;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+h2 {
+  font-size: 2.2rem;
+  color: $dark-gray;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
+.user-page {
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: white;
+  padding: 50px;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  transition: box-shadow $transition-duration ease-in-out;
+
+  &:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.user-info,
+.user-details {
+  background-color: white;
+  padding: 25px;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  margin-bottom: 40px;
+  transition: box-shadow $transition-duration ease-in-out;
+
+  &:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.user-info p,
+.user-details p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: $dark-gray;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: $border-radius;
+  font-size: 1.1rem;
+  transition: border-color $transition-duration ease;
+
+  &:focus {
+    border-color: $primary-color;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.btn-submit,
+.btn-cancel,
+.btn-edit {
+  padding: 12px 25px;
+  border-radius: $border-radius;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color $transition-duration, transform $transition-duration;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.btn-submit {
+  background-color: $primary-color;
+  color: white;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}
+
+.btn-cancel {
+  background-color: #f44336;
+  color: white;
+
+  &:hover {
+    background-color: #e53935;
+  }
+}
+
+.btn-edit {
+  background-color: $secondary-color;
+  color: white;
+
+  &:hover {
+    background-color: #ff9f00;
+  }
+}
+
+.error-message,
+.loading-message {
+  text-align: center;
+  color: #d32f2f;
+  font-size: 1.2rem;
+}
+
+.no-info p {
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.no-info {
+  text-align: center;
+}
+
+.no-info button {
+  margin-top: 20px;
+  background-color: $primary-color;
+  color: white;
+  padding: 12px 25px;
+  border-radius: $border-radius;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color $transition-duration;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-page {
+    padding: 30px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-page {
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .btn-submit,
+  .btn-cancel,
+  .btn-edit {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}
