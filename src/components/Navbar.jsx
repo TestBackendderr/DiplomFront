@@ -6,8 +6,7 @@ import axios from "axios";
 import "../styles/navbar.scss";
 
 const Navbar = () => {
-  const { userName, userId, setUserName, setUserId, updateUserFromToken } =
-    useUser();
+  const { userName, userId, setUserName, setUserId, updateUserFromToken } = useUser();
   const [cartItemCount, setCartItemCount] = useState(0);
 
   const updateUserName = () => {
@@ -69,9 +68,11 @@ const Navbar = () => {
             <Link to="/user" className="navbar-link">
               Welcome, {userName}
             </Link>
-            <Link to="/add-product" className="navbar-link">
-              Add Product
-            </Link>
+            {userId === 9 && (
+              <Link to="/add-product" className="navbar-link">
+                Add Product
+              </Link>
+            )}
             <button onClick={handleLogout}>Logout</button>
           </div>
         ) : (
