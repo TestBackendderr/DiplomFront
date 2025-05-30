@@ -15,6 +15,12 @@ const UserPage = () => {
     telefon: "",
   });
 
+  // Для истории заказов
+  const [orders, setOrders] = useState([]);
+  const [showOrders, setShowOrders] = useState(false);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+  const [ordersError, setOrdersError] = useState(null);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -57,11 +63,11 @@ const UserPage = () => {
 
   const handleEditClick = () => {
     setFormData({
-      kraj: userInfo?.kraj,
-      miasto: userInfo?.miasto,
-      ulica: userInfo?.ulica,
-      nrdomu: userInfo?.nrdomu,
-      telefon: userInfo?.telefon,
+      kraj: userInfo?.kraj || "",
+      miasto: userInfo?.miasto || "",
+      ulica: userInfo?.ulica || "",
+      nrdomu: userInfo?.nrdomu || "",
+      telefon: userInfo?.telefon || "",
     });
     setIsEditing(true);
   };
@@ -87,6 +93,39 @@ const UserPage = () => {
     } catch (err) {
       setError(err.message);
     }
+  };
+
+  // Функция загрузки истории заказов
+  const fetchOrders = async () => {
+    setLoadingOrders(true);
+    setOrdersError(null);
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        "http://localhost:5000/api/order/history",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        setOrders(response.data.orders);
+      } else {
+        setOrdersError("Failed to load orders");
+      }
+    } catch (err) {
+      setOrdersError(err.message);
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
+
+  const toggleOrders = () => {
+    if (!showOrders) {
+      fetchOrders();
+    }
+    setShowOrders(!showOrders);
   };
 
   if (error) {
@@ -194,7 +233,7 @@ const UserPage = () => {
               <p>Telefon: {userInfo.telefon}</p>
               <button
                 className="user-page__btn-edit"
-                onClick={handleEditClick} // Use the new handler
+                onClick={handleEditClick}
                 id="user-page__btn-edit"
               >
                 Edit
@@ -205,7 +244,7 @@ const UserPage = () => {
               <p>No additional info available.</p>
               <button
                 className="user-page__btn-edit"
-                onClick={handleEditClick} // Use the new handler
+                onClick={handleEditClick}
                 id="user-page__btn-add-info"
               >
                 Add Info
@@ -213,6 +252,57 @@ const UserPage = () => {
             </div>
           )}
         </>
+      )}
+
+      {/* Кнопка показать/скрыть историю заказов */}
+      <div className="user-page__orders-toggle">
+        <button
+          className="user-page__btn-orders-toggle"
+          onClick={toggleOrders}
+          id="user-page__btn-orders-toggle"
+        >
+          {showOrders ? "Скрыть историю покупок" : "Показать историю покупок"}
+        </button>
+      </div>
+
+      {/* Блок с историей заказов */}
+      {showOrders && (
+        <div className="user-page__orders">
+          <h2>История покупок</h2>
+          {loadingOrders && <p>Загрузка заказов...</p>}
+          {ordersError && (
+            <p className="user-page__error">Ошибка: {ordersError}</p>
+          )}
+          {!loadingOrders && orders.length === 0 && (
+            <p>У вас пока нет заказов.</p>
+          )}
+          {!loadingOrders && orders.length > 0 && (
+            <ul className="user-page__orders-list">
+              {orders.map((order) => (
+                <li key={order.id} className="user-page__order-item">
+                  <div>
+                    <strong>Заказ ID:</strong> {order.id} <br />
+                    <strong>Дата:</strong>{" "}
+                    {new Date(order.createdAt).toLocaleString()} <br />
+                    <strong>Адрес:</strong> {order.address} <br />
+                    <strong>Метод оплаты:</strong> {order.paymentMethod} <br />
+                    <strong>Сумма:</strong> {order.totalPrice.toFixed(2)} <br />
+                    <strong>Статус:</strong> {order.status} <br />
+                    <strong>Товары:</strong>
+                    <ul>
+                      {order.items.map((item) => (
+                        <li key={item.productId}>
+                          {item.product.name} — Кол-во: {item.quantity} — Цена за шт.:{" "}
+                          {item.price.toFixed(2)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
     </div>
   );
