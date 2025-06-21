@@ -55,7 +55,7 @@ const ProductList = ({ products }) => {
       {cartMessage && <div className="cart-message">{cartMessage}</div>}{" "}
       {/* Сообщение о добавлении в корзину */}
       {products.length === 0 ? (
-        <p>Нет продуктов для отображения</p>
+        <p>Nie ma towarow</p>
       ) : (
         products.map((product) => (
           <div

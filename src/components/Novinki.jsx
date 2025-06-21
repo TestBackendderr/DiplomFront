@@ -25,7 +25,8 @@ const Novinki = () => {
       });
   }, []);
 
-  if (loading) return <p className="loading-text">Загрузка новинок...</p>;
+  if (loading) return <p className="loading-text">
+Wgrywanie nowych produktów...</p>;
   if (error) return <p className="error-text">{error}</p>;
 
   return (
@@ -39,7 +40,7 @@ const Novinki = () => {
               className="novinki-image"
             />
           ) : (
-            <p className="no-image">Изображение отсутствует</p>
+            <p className="no-image">Nie ma obrazu</p>
           )}
           <div className="novinki-card-info">
             <h3>{product.name}</h3>

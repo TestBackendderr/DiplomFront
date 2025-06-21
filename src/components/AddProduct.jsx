@@ -53,7 +53,7 @@ const AddProduct = () => {
           required
         />
         <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-        <button type="submit">Добавить продукт</button>
+        <button type="submit">Dodaj tort</button>
       </form>
     </div>
   );

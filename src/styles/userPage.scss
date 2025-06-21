@@ -211,3 +211,79 @@ input {
     font-size: 1rem;
   }
 }
+
+.user-page__orders {
+  margin-top: 40px;
+
+  h2 {
+    color: $primary-color;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  &-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  &-item {
+    background: white;
+    padding: 25px 30px;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    transition: box-shadow $transition-duration ease-in-out;
+
+    &:hover {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    strong {
+      color: $secondary-color;
+    }
+
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+
+      li {
+        font-size: 1.1rem;
+        color: $dark-gray;
+        margin-bottom: 6px;
+        border-left: 3px solid $primary-color;
+        padding-left: 8px;
+        transition: color $transition-duration;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+.user-page__orders-toggle {
+  text-align: center;
+  margin: 30px 0;
+
+  button {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius;
+    padding: 14px 35px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color $transition-duration, transform $transition-duration;
+
+    &:hover {
+      background-color: $secondary-color;
+      transform: scale(1.05);
+    }
+  }
+}

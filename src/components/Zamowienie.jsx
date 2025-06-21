@@ -115,13 +115,13 @@ const Zamowienie = () => {
 
   return (
     <div className="zamowienie-container">
-      <h2>Оформление заказа</h2>
+      <h2>Składanie zamówień</h2>
 
       {loading && <p>Загрузка...</p>}
       {error && <p className="error">{error}</p>}
 
       {!loading && cartItems.length === 0 ? (
-        <p>В корзине нет товаров для оформления.</p>
+        <p>W koszyku nie ma żadnych pozycji do realizacji zakupu.Checkout</p>
       ) : (
         <form onSubmit={handleSubmit}>
           <div className="order-summary">
@@ -132,12 +132,12 @@ const Zamowienie = () => {
               </p>
             ))}
             <p>
-              <strong>Общая сумма: {totalPrice} zl</strong>
+              <strong>Łączna kwota: {totalPrice} zl</strong>
             </p>
           </div>
 
           <div className="order-details">
-            <label htmlFor="address">Адрес доставки:</label>
+            <label htmlFor="address">Adres dostawy:</label>
             <input
               type="text"
               id="address"
@@ -153,12 +153,12 @@ const Zamowienie = () => {
               onChange={handleChange}
               required
             >
-              <option value="card">Картой</option>
-              <option value="cash">Наличными</option>
+              <option value="card">Karta</option>
+              <option value="cash">Gotowka</option>
             </select>
           </div>
 
-          <button type="submit">Подтвердить заказ</button>
+          <button type="submit">Potwierdź zamówienie</button>
         </form>
       )}
     </div>

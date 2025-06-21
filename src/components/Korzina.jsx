@@ -106,12 +106,12 @@ const Korzina = () => {
 
   return (
     <div className="korzina-container">
-      <h2>🛒 Ваша корзина</h2>
-      {loading && <p>Загрузка...</p>}
+      <h2>🛒 Wasz koszyk</h2>
+      {loading && <p>Ladowanie...</p>}
       {error && <p className="error">{error}</p>}
 
       {!loading && cartItems.length === 0 ? (
-        <p>В корзине нет товаров.</p>
+        <p>Koszyk pusty.</p>
       ) : (
         <div className="cart-list">
           {cartItems.map((item) => (
@@ -141,7 +141,7 @@ const Korzina = () => {
                   className="remove-btn"
                   onClick={() => removeFromCart(item.product.id)}
                 >
-                  Удалить
+                  Usun
                 </button>
               </div>
             </div>
@@ -151,10 +151,10 @@ const Korzina = () => {
 
       {!loading && cartItems.length > 0 && (
         <div className="cart-summary">
-          <h3>Общая сумма: {totalPrice} zl</h3>
-          <h4>Общее количество товаров: {totalItems}</h4>
+          <h3>Suma zamowenia {totalPrice} zl</h3>
+          <h4>Ilosc towarow: {totalItems}</h4>
           <button className="checkout-btn" onClick={handleCheckout}>
-            Оформить заказ
+           Akceptuj zamowenie
           </button>
         </div>
       )}

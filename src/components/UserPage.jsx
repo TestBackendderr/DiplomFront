@@ -261,38 +261,38 @@ const UserPage = () => {
           onClick={toggleOrders}
           id="user-page__btn-orders-toggle"
         >
-          {showOrders ? "Скрыть историю покупок" : "Показать историю покупок"}
+          {showOrders ? "Ukryj historię zakupów" : "Pokaz historię zakupów"}
         </button>
       </div>
 
       {/* Блок с историей заказов */}
       {showOrders && (
         <div className="user-page__orders">
-          <h2>История покупок</h2>
-          {loadingOrders && <p>Загрузка заказов...</p>}
+          <h2>Historia zakupów</h2>
+          {loadingOrders && <p>Ładowanie zamówień...</p>}
           {ordersError && (
-            <p className="user-page__error">Ошибка: {ordersError}</p>
+            <p className="user-page__error">Blad: {ordersError}</p>
           )}
           {!loadingOrders && orders.length === 0 && (
-            <p>У вас пока нет заказов.</p>
+            <p>Nie masz jeszcze żadnych zamówień.</p>
           )}
           {!loadingOrders && orders.length > 0 && (
             <ul className="user-page__orders-list">
               {orders.map((order) => (
                 <li key={order.id} className="user-page__order-item">
                   <div>
-                    <strong>Заказ ID:</strong> {order.id} <br />
-                    <strong>Дата:</strong>{" "}
+                    <strong>Zamowienie ID:</strong> {order.id} <br />
+                    <strong>Data:</strong>{" "}
                     {new Date(order.createdAt).toLocaleString()} <br />
-                    <strong>Адрес:</strong> {order.address} <br />
-                    <strong>Метод оплаты:</strong> {order.paymentMethod} <br />
-                    <strong>Сумма:</strong> {order.totalPrice.toFixed(2)} <br />
-                    <strong>Статус:</strong> {order.status} <br />
-                    <strong>Товары:</strong>
+                    <strong>Adres:</strong> {order.address} <br />
+                    <strong>MEtoda platnosci:</strong> {order.paymentMethod} <br />
+                    <strong>Suma:</strong> {order.totalPrice.toFixed(2)} <br />
+                    <strong>Status:</strong> {order.status} <br />
+                    <strong>Towary:</strong>
                     <ul>
                       {order.items.map((item) => (
                         <li key={item.productId}>
-                          {item.product.name} — Кол-во: {item.quantity} — Цена за шт.:{" "}
+                          {item.product.name} — Ilosc: {item.quantity} — Cena za szt.:{" "}
                           {item.price.toFixed(2)}
                         </li>
                       ))}

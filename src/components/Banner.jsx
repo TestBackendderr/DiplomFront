@@ -5,9 +5,9 @@ import './styles/banner.scss';
 const Banner = () => {
   return (
     <div className="banner">
-      <h1>Добро пожаловать в нашу кондитерскую!</h1>
-      <p>Почувствуйте вкус наших сладких изделий</p>
-      <button>Смотреть меню</button>
+      <h1>Witamy w naszej cukierni!</h1>
+      <p>Poczuj smak naszych słodkich produktów</p>
+      <button>Zobacz menu</button>
     </div>
   );
 };
