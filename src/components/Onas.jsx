@@ -14,7 +14,7 @@ const Onas = () => {
     <section className="onas-section">
       <div className="onas-container">
         <button className="novinki-button" onClick={toggleNovinki}>
-          {showNovinki ? 'Скрыть новинки' : 'Новинки'}
+          {showNovinki ? 'Ukryj Nowosci' : 'Nowosci'}
         </button>
 
         {showNovinki && (
