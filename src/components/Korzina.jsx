@@ -33,7 +33,7 @@ const Korzina = () => {
     const token = localStorage.getItem("token");
 
     if (!userId || !token) {
-      setError("Пользователь не авторизован");
+      setError("Użytkownik nie jest zalogowany");
       setLoading(false);
       return;
     }
@@ -43,12 +43,11 @@ const Korzina = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // Прямо передаем данные, предполагая, что ответ сервера - это массив товаров
       setCartItems(response.data || []);
       setLoading(false);
     } catch (err) {
-      console.error("Ошибка при загрузке корзины:", err);
-      setError("Не удалось загрузить корзину");
+      console.error("Błąd podczas ładowania koszyka:", err);
+      setError("Nie udało się załadować koszyka");
       setLoading(false);
     }
   };
@@ -61,7 +60,7 @@ const Korzina = () => {
       });
       setCartItems(cartItems.filter((item) => item.product.id !== productId));
     } catch (err) {
-      setError("Не удалось удалить товар");
+      setError("Nie udało się usunąć produktu");
     }
   };
 
@@ -71,14 +70,12 @@ const Korzina = () => {
       const item = cartItems.find((item) => item.product.id === productId);
       const newQuantity = Math.max(1, item.quantity + delta);
 
-      // Обновляем сервер
       await axios.put(
         `http://localhost:5000/api/cart/${productId}`,
         { quantity: newQuantity },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Обновляем состояние локально
       setCartItems((prevItems) =>
         prevItems.map((item) =>
           item.product.id === productId
@@ -87,7 +84,7 @@ const Korzina = () => {
         )
       );
     } catch (err) {
-      setError("Не удалось обновить количество");
+      setError("Nie udało się zaktualizować ilości");
     }
   };
 
@@ -127,7 +124,7 @@ const Korzina = () => {
               />
               <div className="cart-info">
                 <h3>{item.product.name}</h3>
-                <p>{item.product.price} zl</p>
+                <p>{item.product.price} zł</p>
                 <div className="quantity-controls">
                   <button onClick={() => updateQuantity(item.product.id, -1)}>
                     -
@@ -151,7 +148,7 @@ const Korzina = () => {
 
       {!loading && cartItems.length > 0 && (
         <div className="cart-summary">
-          <h3>Suma zamowenia {totalPrice} zl</h3>
+          <h3>Suma zamowenia {totalPrice} zł</h3>
           <h4>Ilosc towarow: {totalItems}</h4>
           <button className="checkout-btn" onClick={handleCheckout}>
            Akceptuj zamowenie

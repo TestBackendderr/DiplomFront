@@ -19,7 +19,7 @@ const Zamowienie = () => {
     const token = localStorage.getItem("token");
 
     if (!userId || !token) {
-      setError("Пользователь не авторизован");
+      setError("Użytkownik nie jest zalogowany");
       setLoading(false);
       return;
     }
@@ -32,7 +32,7 @@ const Zamowienie = () => {
       setCartItems(response.data || []);
       setLoading(false);
     } catch (err) {
-      setError("Не удалось загрузить корзину");
+      setError("Nie udało się załadować koszyka");
       setLoading(false);
     }
   };
@@ -41,7 +41,7 @@ const Zamowienie = () => {
     const token = localStorage.getItem("token");
 
     if (!userId || !token) {
-      setError("Пользователь не авторизован");
+      setError("Użytkownik nie jest zalogowany");
       return;
     }
 
@@ -59,7 +59,7 @@ const Zamowienie = () => {
         }));
       }
     } catch (err) {
-      setError("Не удалось получить адрес доставки");
+      setError("Nie udało się pobrać adresu dostawy");
     }
   };
 
@@ -85,7 +85,7 @@ const Zamowienie = () => {
     const token = localStorage.getItem("token");
 
     if (!userId || !token) {
-      setError("Пользователь не авторизован");
+      setError("Użytkownik nie jest zalogowany");
       return;
     }
 
@@ -101,10 +101,10 @@ const Zamowienie = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      alert("Заказ успешно оформлен!");
+      alert("Zamówienie zostało pomyślnie złożone!");
     } catch (err) {
-      console.error("Ошибка при оформлении заказа:", err);
-      setError("Не удалось оформить заказ");
+      console.error("Błąd podczas składania zamówienia:", err);
+      setError("Nie udało się złożyć zamówienia");
     }
   };
 
@@ -115,24 +115,24 @@ const Zamowienie = () => {
 
   return (
     <div className="zamowienie-container">
-      <h2>Składanie zamówień</h2>
+      <h2>Składanie zamówienia</h2>
 
-      {loading && <p>Загрузка...</p>}
+      {loading && <p>Ładowanie...</p>}
       {error && <p className="error">{error}</p>}
 
       {!loading && cartItems.length === 0 ? (
-        <p>W koszyku nie ma żadnych pozycji do realizacji zakupu.Checkout</p>
+        <p>W koszyku nie ma żadnych pozycji do realizacji zakupu</p>
       ) : (
         <form onSubmit={handleSubmit}>
           <div className="order-summary">
-            <h3>Товары в заказе:</h3>
+            <h3>Produkty w zamówieniu:</h3>
             {cartItems.map((item, index) => (
               <p key={item.product_id || `item-${index}`}>
-                {item.product.name} - {item.product.price} zl x {item.quantity}
+                {item.product.name} - {item.product.price} zł x {item.quantity}
               </p>
             ))}
             <p>
-              <strong>Łączna kwota: {totalPrice} zl</strong>
+              <strong>Łączna kwota: {totalPrice} zł</strong>
             </p>
           </div>
 
@@ -146,7 +146,7 @@ const Zamowienie = () => {
               onChange={handleChange}
               required
             />
-            <label>Способ оплаты:</label>
+            <label>Metoda płatności:</label>
             <select
               name="paymentMethod"
               value={orderDetails.paymentMethod}
@@ -154,7 +154,7 @@ const Zamowienie = () => {
               required
             >
               <option value="card">Karta</option>
-              <option value="cash">Gotowka</option>
+              <option value="cash">Gotówka</option>
             </select>
           </div>
 

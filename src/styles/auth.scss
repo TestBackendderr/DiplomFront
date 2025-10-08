@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
+
+$primary-color: #ff69b4;
+$accent-color: #ff1493;
+$gold: #ffd700;
+$light-pink: #fff0f5;
+$border-radius: 20px;
+$transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+.auth-container {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  
+  > div {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    padding: 50px 45px;
+    border-radius: $border-radius;
+    box-shadow: 0 15px 50px rgba(255, 105, 180, 0.2);
+    max-width: 450px;
+    width: 100%;
+    border: 1px solid rgba(255, 105, 180, 0.1);
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, $primary-color, $accent-color, $gold);
+      border-radius: $border-radius $border-radius 0 0;
+    }
+    
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, $primary-color, $accent-color);
+        border-radius: 2px;
+      }
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      
+      input {
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 1rem;
+        border-radius: 12px;
+        border: 2px solid $light-pink;
+        font-family: 'Poppins', sans-serif;
+        transition: $transition;
+        background: white;
+        color: #2d2d2d;
+        box-sizing: border-box;
+        
+        &::placeholder {
+          color: #999;
+        }
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
+          transform: translateY(-2px);
+        }
+        
+        &:hover {
+          border-color: lighten($primary-color, 10%);
+        }
+      }
+      
+      button {
+        width: 100%;
+        padding: 16px 30px;
+        background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1rem;
+        transition: $transition;
+        box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 10px;
+        
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+        }
+        
+        &:active {
+          transform: translateY(-1px);
+        }
+      }
+    }
+    
+    > p {
+      background: rgba(255, 68, 68, 0.1);
+      color: #cc0000;
+      padding: 12px 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      margin-top: 20px;
+      border: 1px solid rgba(255, 68, 68, 0.2);
+      font-size: 0.95rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-container > div {
+    padding: 40px 35px;
+    
+    h2 {
+      font-size: 2rem;
+    }
+    
+    form input {
+      padding: 14px 18px;
+    }
+    
+    form button {
+      padding: 14px 25px;
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 20px 15px;
+    
+    > div {
+      padding: 35px 25px;
+      
+      h2 {
+        font-size: 1.7rem;
+      }
+      
+      form input {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+      }
+      
+      form button {
+        padding: 14px 20px;
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+

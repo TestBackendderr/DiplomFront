@@ -286,14 +286,14 @@ const UserPage = () => {
                     {new Date(order.createdAt).toLocaleString()} <br />
                     <strong>Adres:</strong> {order.address} <br />
                     <strong>MEtoda platnosci:</strong> {order.paymentMethod} <br />
-                    <strong>Suma:</strong> {order.totalPrice.toFixed(2)} <br />
+                    <strong>Suma:</strong> {order.totalPrice.toFixed(2)} zł <br />
                     <strong>Status:</strong> {order.status} <br />
                     <strong>Towary:</strong>
                     <ul>
                       {order.items.map((item) => (
                         <li key={item.productId}>
                           {item.product.name} — Ilosc: {item.quantity} — Cena za szt.:{" "}
-                          {item.price.toFixed(2)}
+                          {item.price.toFixed(2)} zł
                         </li>
                       ))}
                     </ul>

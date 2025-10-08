@@ -1,46 +1,138 @@
-/* src/styles/onas.scss */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap');
+
+$primary-color: #ff69b4;
+$accent-color: #ff1493;
+$gold: #ffd700;
+$light-pink: #fff0f5;
+$border-radius: 20px;
+$transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
 .onas-section {
-    margin-top: 60px;
-    padding: 40px 20px;
-    background-color: #fff5e5;
-    display: flex;
-    justify-content: center;
+  margin-top: 80px;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, rgba(255, 240, 245, 0.6) 0%, rgba(255, 255, 255, 0.8) 100%);
+  display: flex;
+  justify-content: center;
+}
+
+.onas-container {
+  max-width: 1200px;
+  width: 100%;
+  border-radius: $border-radius;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 15px 50px rgba(255, 105, 180, 0.15);
+  padding: 50px 40px;
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(255, 105, 180, 0.1);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, $primary-color, $accent-color, $gold);
+    border-radius: $border-radius $border-radius 0 0;
+  }
+}
+
+.novinki-button {
+  background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+  color: white;
+  padding: 16px 40px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: $transition;
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '🎂';
+    margin-right: 10px;
+    font-size: 1.3rem;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+    
+    &::after {
+      width: 300px;
+      height: 300px;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.novinki-wrapper {
+  margin-top: 40px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .onas-section {
+    padding: 40px 15px;
+    margin-top: 50px;
   }
   
   .onas-container {
-    max-width: 1000px;
-    width: 100%;
-    border-radius: 30px;
-    background-color: #ffe0b2;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    padding: 30px;
-    text-align: center;
-    position: relative;
+    padding: 35px 25px;
   }
   
   .novinki-button {
-    background-color: #f28b00;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 999px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 14px 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .onas-section {
+    padding: 30px 10px;
   }
   
-  .novinki-button:hover {
-    background-color: #d97706;
+  .onas-container {
+    padding: 25px 20px;
   }
   
-  .novinki-wrapper {
-    margin-top: 30px;
-    animation: fadeIn 0.4s ease-in-out;
+  .novinki-button {
+    width: 100%;
+    padding: 16px 20px;
   }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
+}

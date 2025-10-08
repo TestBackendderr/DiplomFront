@@ -9,6 +9,7 @@ import Register from './components/Register';
 import Korzina from './components/Korzina';
 import UserPage from './components/UserPage';
 import Zamowienie from './components/Zamowienie'; // Импортируем новую страницу
+import ProtectedRoute from './components/ProtectedRoute';
 import { UserProvider } from './UserContext';
 
 const App = () => {
@@ -18,12 +19,28 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/add-product" element={
+            <ProtectedRoute requireAdmin={true}>
+              <AddProduct />
+            </ProtectedRoute>
+          } />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/korzina" element={<Korzina />} />
-          <Route path="/user" element={<UserPage />} />
-          <Route path="/Zamowienie" element={<Zamowienie />} /> {/* Новая страница */}
+          <Route path="/korzina" element={
+            <ProtectedRoute>
+              <Korzina />
+            </ProtectedRoute>
+          } />
+          <Route path="/user" element={
+            <ProtectedRoute>
+              <UserPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/Zamowienie" element={
+            <ProtectedRoute>
+              <Zamowienie />
+            </ProtectedRoute>
+          } /> {/* Новая страница */}
         </Routes>
       </Router>
     </UserProvider>

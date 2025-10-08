@@ -1,34 +1,205 @@
-/* src/styles/addProduct.scss */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
+
+$primary-color: #ff69b4;
+$accent-color: #ff1493;
+$gold: #ffd700;
+$light-pink: #fff0f5;
+$border-radius: 20px;
+$transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
 .add-product-container {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #f4f4f4;
-  max-width: 600px;
-  margin: 20px auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+  padding: 60px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+  min-height: 80vh;
+  
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, $primary-color, $accent-color, $gold);
+      border-radius: 2px;
+    }
+  }
+  
+  form {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    padding: 45px;
+    border-radius: $border-radius;
+    box-shadow: 0 10px 40px rgba(255, 105, 180, 0.15);
+    border: 1px solid rgba(255, 105, 180, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 16px 22px;
+    font-size: 1.05rem;
+    border-radius: 12px;
+    border: 2px solid $light-pink;
+    font-family: 'Poppins', sans-serif;
+    transition: $transition;
+    background: white;
+    color: #2d2d2d;
+    box-sizing: border-box;
+    
+    &::placeholder {
+      color: #999;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    &:hover {
+      border-color: lighten($primary-color, 10%);
+    }
+  }
+  
+  select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff69b4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    padding-right: 45px;
+  }
+  
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  input[type="file"] {
+    padding: 15px;
+    border: 2px dashed $primary-color;
+    background: rgba(255, 105, 180, 0.05);
+    cursor: pointer;
+    
+    &:hover {
+      background: rgba(255, 105, 180, 0.1);
+      border-color: $accent-color;
+    }
+    
+    &::file-selector-button {
+      background: linear-gradient(135deg, $primary-color, $accent-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      transition: $transition;
+      margin-right: 15px;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+      }
+    }
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, $gold 0%, #ffed4e 100%);
+    color: #2d2d2d;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    transition: $transition;
+    box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 15px;
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 35px rgba(255, 215, 0, 0.5);
+    }
+    
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
 }
 
-.add-product-container form {
-  display: flex;
-  flex-direction: column;
+@media (max-width: 768px) {
+  .add-product-container {
+    padding: 40px 20px;
+    
+    h2 {
+      font-size: 2.2rem;
+    }
+    
+    form {
+      padding: 35px 25px;
+      gap: 20px;
+    }
+    
+    input,
+    textarea {
+      padding: 14px 18px;
+      font-size: 1rem;
+    }
+    
+    textarea {
+      min-height: 100px;
+    }
+    
+    button[type="submit"] {
+      padding: 16px 30px;
+      font-size: 1.1rem;
+    }
+  }
 }
 
-.add-product-container input,
-.add-product-container textarea,
-.add-product-container button {
-  margin-bottom: 15px;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.add-product-container button {
-  background-color: #333;
-  color: white;
-  cursor: pointer;
-}
-
-.add-product-container button:hover {
-  background-color: #ff5722;
+@media (max-width: 480px) {
+  .add-product-container {
+    padding: 30px 15px;
+    
+    h2 {
+      font-size: 1.8rem;
+    }
+    
+    form {
+      padding: 25px 20px;
+    }
+    
+    input,
+    textarea {
+      padding: 12px 15px;
+    }
+  }
 }

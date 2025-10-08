@@ -10,17 +10,17 @@ const Novinki = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/cake") // Убедись, что этот эндпоинт существует
+      .get("http://localhost:5000/api/cake")
       .then((response) => {
         const sorted = [...response.data].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        setLatestProducts(sorted.slice(0, 3)); // Только последние 3
+        setLatestProducts(sorted.slice(0, 3));
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Ошибка загрузки новинок:", error);
-        setError("Не удалось загрузить новинки.");
+        console.error("Błąd ładowania nowości:", error);
+        setError("Nie udało się załadować nowości.");
         setLoading(false);
       });
   }, []);
@@ -45,7 +45,7 @@ Wgrywanie nowych produktów...</p>;
           <div className="novinki-card-info">
             <h3>{product.name}</h3>
             <p>{product.description}</p>
-            <span className="price">{product.price}₽</span>
+            <span className="price">{product.price} zł</span>
           </div>
         </div>
       ))}

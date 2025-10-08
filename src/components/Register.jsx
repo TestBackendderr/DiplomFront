@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../styles/auth.scss";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -24,30 +25,31 @@ const Register = () => {
         }
       );
       if (response.data.success) {
-        navigate("/login"); // Перенаправляем на страницу логина после успешной регистрации
+        navigate("/login");
       } else {
-        setError("Ошибка при регистрации");
+        setError("Błąd podczas rejestracji");
       }
     } catch (err) {
-      setError("Произошла ошибка при регистрации");
+      setError("Wystąpił błąd podczas rejestracji");
       console.error(err);
     }
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="auth-container">
+      <div>
+        <h2>Rejestracja</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Imię"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
         <input
           type="text"
-          placeholder="Surname"
+          placeholder="Nazwisko"
           value={surname}
           onChange={(e) => setSurname(e.target.value)}
           required
@@ -61,14 +63,15 @@ const Register = () => {
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Hasło"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit">Zarejestruj</button>
       </form>
       {error && <p>{error}</p>}
+      </div>
     </div>
   );
 };

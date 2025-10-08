@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/modal.scss'; // Подключаем стили для модального окна
+import '../styles/modal.scss';
 
 const Modal = ({ product, closeModal }) => {
   return (
@@ -11,11 +11,11 @@ const Modal = ({ product, closeModal }) => {
           {product.image_url ? (
             <img src={`http://localhost:5000${product.image_url}`} alt={product.name} />
           ) : (
-            <p>No image available</p>
+            <p>Brak obrazu</p>
           )}
-          <p><strong>Описание:</strong></p>
-          <p>{product.opis}</p> {/* Отображаем описание из базы данных */}
-          <p><strong>Цена:</strong> {product.price} zl.</p>
+          <p><strong>Opis:</strong></p>
+          <p>{product.opis}</p>
+          <p><strong>Cena:</strong> {product.price} zł</p>
         </div>
       </div>
     </div>

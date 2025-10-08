@@ -6,7 +6,7 @@ import axios from "axios";
 import "../styles/navbar.scss";
 
 const Navbar = () => {
-  const { userName, userId, setUserName, setUserId, updateUserFromToken } = useUser();
+  const { userName, userId, userRole, setUserName, setUserId, setUserRole, updateUserFromToken } = useUser();
   const [cartItemCount, setCartItemCount] = useState(0);
 
   const updateUserName = () => {
@@ -27,7 +27,7 @@ const Navbar = () => {
       );
       setCartItemCount(totalItemCount);
     } catch (error) {
-      console.error("Ошибка при получении корзины:", error);
+      console.error("Błąd podczas pobierania koszyka:", error);
       setCartItemCount(0);
     }
   };
@@ -54,34 +54,35 @@ const Navbar = () => {
     localStorage.removeItem("token");
     setUserName(null);
     setUserId(null);
+    setUserRole(null);
   };
 
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-logo">
-        <h1>Product Shop</h1>
+        <h1>Tortowy Świat</h1>
       </Link>
 
       <div className="navbar-links">
         {userName ? (
           <div>
             <Link to="/user" className="navbar-link">
-              Welcome, {userName}
+              Witaj, {userName}
             </Link>
-            {userId === 9 && (
+            {userRole === 'admin' && (
               <Link to="/add-product" className="navbar-link">
-                Add Product
+                Dodaj Produkt
               </Link>
             )}
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout}>Wyloguj</button>
           </div>
         ) : (
           <div>
             <Link to="/login" className="navbar-link">
-              Login
+              Zaloguj
             </Link>
             <Link to="/register" className="navbar-link">
-              Register
+              Zarejestruj
             </Link>
           </div>
         )}

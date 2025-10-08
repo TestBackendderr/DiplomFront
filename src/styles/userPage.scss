@@ -1,289 +1,392 @@
-$primary-color: #f8a5c2;  // Розовый для основного цвета
-$secondary-color: #ffbc5c; // Оранжево-желтый для акцентов
-$light-gray: #f9f7f1;      // Очень светлый фон
-$dark-gray: #6c6c6c;       // Серый для текста
-$text-muted: #9e9e9e;      // Мутный текст
-$border-radius: 1rem;      // Округлые углы
-$box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);  // Больше тени для выделенности
-$transition-duration: 0.3s;
-$font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
 
-body {
-  font-family: $font-family-base;
-  margin: 0;
-  padding: 0;
-  background-color: $light-gray;
-  color: $dark-gray;
-  line-height: 1.6;
-}
-
-h1 {
-  font-size: 2.8rem;
-  color: $primary-color;
-  font-weight: 700;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-h2 {
-  font-size: 2.2rem;
-  color: $dark-gray;
-  font-weight: 600;
-  margin: 20px 0;
-}
+$primary-color: #ff69b4;
+$accent-color: #ff1493;
+$gold: #ffd700;
+$light-pink: #fff0f5;
+$border-radius: 20px;
+$transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
 .user-page {
-  max-width: 900px;
-  margin: 40px auto;
-  background-color: white;
-  padding: 50px;
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 60px 50px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
   border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  transition: box-shadow $transition-duration ease-in-out;
-
-  &:hover {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 15px 50px rgba(255, 105, 180, 0.15);
+  border: 1px solid rgba(255, 105, 180, 0.1);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, $primary-color, $accent-color, $gold);
+    border-radius: $border-radius $border-radius 0 0;
   }
-}
-
-.user-info,
-.user-details {
-  background-color: white;
-  padding: 25px;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  margin-bottom: 40px;
-  transition: box-shadow $transition-duration ease-in-out;
-
-  &:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  
+  &__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, $primary-color, $accent-color, $gold);
+      border-radius: 2px;
+    }
   }
-}
-
-.user-info p,
-.user-details p {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-bottom: 5px;
-  color: $dark-gray;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: $border-radius;
-  font-size: 1.1rem;
-  transition: border-color $transition-duration ease;
-
-  &:focus {
-    border-color: $primary-color;
-    outline: none;
+  
+  &__info,
+  &__details {
+    background: linear-gradient(135deg, rgba(255, 240, 245, 0.4), rgba(255, 255, 255, 0.6));
+    padding: 30px;
+    border-radius: $border-radius;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 105, 180, 0.1);
+    transition: $transition;
+    
+    &:hover {
+      box-shadow: 0 8px 25px rgba(255, 105, 180, 0.12);
+      transform: translateY(-3px);
+    }
+    
+    p {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      margin: 12px 0;
+      color: #2d2d2d;
+      font-weight: 500;
+    }
   }
-
-  &::placeholder {
-    color: $text-muted;
+  
+  &__details-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 25px;
+    text-align: center;
   }
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-}
-
-.btn-submit,
-.btn-cancel,
-.btn-edit {
-  padding: 12px 25px;
-  border-radius: $border-radius;
-  border: none;
-  cursor: pointer;
-  font-size: 1.1rem;
-  font-weight: 600;
-  transition: background-color $transition-duration, transform $transition-duration;
-
-  &:hover {
-    transform: scale(1.05);
+  
+  &__form {
+    background: white;
+    padding: 35px;
+    border-radius: $border-radius;
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.1);
+    
+    &-group {
+      margin-bottom: 25px;
+      
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: $primary-color;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      input {
+        width: 100%;
+        padding: 14px 20px;
+        border: 2px solid $light-pink;
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 1rem;
+        transition: $transition;
+        background: white;
+        box-sizing: border-box;
+        
+        &::placeholder {
+          color: #999;
+        }
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
+          transform: translateY(-2px);
+        }
+        
+        &:hover {
+          border-color: lighten($primary-color, 10%);
+        }
+      }
+    }
+    
+    &-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: flex-end;
+      margin-top: 30px;
+    }
   }
-}
-
-.btn-submit {
-  background-color: $primary-color;
-  color: white;
-
-  &:hover {
-    background-color: $secondary-color;
+  
+  &__btn-submit,
+  &__btn-cancel,
+  &__btn-edit {
+    padding: 14px 35px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    transition: $transition;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
-}
-
-.btn-cancel {
-  background-color: #f44336;
-  color: white;
-
-  &:hover {
-    background-color: #e53935;
+  
+  &__btn-submit {
+    background: linear-gradient(135deg, $primary-color, $accent-color);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+    }
   }
-}
-
-.btn-edit {
-  background-color: $secondary-color;
-  color: white;
-
-  &:hover {
-    background-color: #ff9f00;
+  
+  &__btn-cancel {
+    background: linear-gradient(135deg, #666, #444);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
   }
-}
-
-.error-message,
-.loading-message {
-  text-align: center;
-  color: #d32f2f;
-  font-size: 1.2rem;
-}
-
-.no-info p {
-  text-align: center;
-  font-size: 1.3rem;
-}
-
-.no-info {
-  text-align: center;
-}
-
-.no-info button {
-  margin-top: 20px;
-  background-color: $primary-color;
-  color: white;
-  padding: 12px 25px;
-  border-radius: $border-radius;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color $transition-duration;
-
-  &:hover {
-    background-color: $secondary-color;
+  
+  &__btn-edit {
+    background: linear-gradient(135deg, $gold, #ffed4e);
+    color: #2d2d2d;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+    }
+  }
+  
+  &__no-info {
+    text-align: center;
+    padding: 40px;
+    
+    p {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 25px;
+      font-family: 'Poppins', sans-serif;
+    }
+  }
+  
+  &__orders {
+    margin-top: 50px;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(255, 240, 245, 0.4), rgba(255, 255, 255, 0.6));
+    border-radius: $border-radius;
+    border: 1px solid rgba(255, 105, 180, 0.1);
+    
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: $primary-color;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    &-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    
+    &-item {
+      background: white;
+      padding: 30px;
+      border-radius: $border-radius;
+      box-shadow: 0 6px 20px rgba(255, 105, 180, 0.1);
+      transition: $transition;
+      border: 2px solid transparent;
+      
+      &:hover {
+        box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+        transform: translateY(-3px);
+        border-color: rgba(255, 105, 180, 0.2);
+      }
+      
+      strong {
+        color: $primary-color;
+        font-weight: 600;
+      }
+      
+      ul {
+        margin-top: 15px;
+        padding-left: 0;
+        list-style: none;
+        
+        li {
+          font-size: 1rem;
+          color: #2d2d2d;
+          margin-bottom: 10px;
+          padding: 10px 15px;
+          background: rgba(255, 240, 245, 0.3);
+          border-radius: 10px;
+          border-left: 4px solid $primary-color;
+          transition: $transition;
+          font-family: 'Poppins', sans-serif;
+          
+          &:hover {
+            background: rgba(255, 105, 180, 0.1);
+            transform: translateX(5px);
+          }
+        }
+      }
+    }
+  }
+  
+  &__orders-toggle {
+    text-align: center;
+    margin: 40px 0;
+    
+    button {
+      background: linear-gradient(135deg, $primary-color, $accent-color);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 16px 45px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: $transition;
+      box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+      }
+      
+      &:active {
+        transform: translateY(-1px);
+      }
+    }
+  }
+  
+  &__error {
+    background: rgba(255, 68, 68, 0.1);
+    color: #cc0000;
+    padding: 15px 25px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 68, 68, 0.2);
+  }
+  
+  &__loading {
+    text-align: center;
+    font-size: 1.3rem;
+    color: $primary-color;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    padding: 50px;
   }
 }
 
 @media (max-width: 768px) {
   .user-page {
-    padding: 30px;
-  }
-
-  h1 {
-    font-size: 2.2rem;
-  }
-
-  h2 {
-    font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .user-page {
-    padding: 20px;
-  }
-
-  .form-group {
-    margin-bottom: 12px;
-  }
-
-  input {
-    padding: 10px;
-    font-size: 1rem;
-  }
-
-  .btn-submit,
-  .btn-cancel,
-  .btn-edit {
-    padding: 10px 20px;
-    font-size: 1rem;
-  }
-}
-
-.user-page__orders {
-  margin-top: 40px;
-
-  h2 {
-    color: $primary-color;
-    font-weight: 700;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-  }
-
-  &-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-  }
-
-  &-item {
-    background: white;
-    padding: 25px 30px;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
-    transition: box-shadow $transition-duration ease-in-out;
-
-    &:hover {
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+    padding: 40px 25px;
+    margin: 40px 20px;
+    
+    &__title {
+      font-size: 2.2rem;
     }
-
-    strong {
-      color: $secondary-color;
-    }
-
-    ul {
-      margin-top: 10px;
-      padding-left: 20px;
-
-      li {
-        font-size: 1.1rem;
-        color: $dark-gray;
-        margin-bottom: 6px;
-        border-left: 3px solid $primary-color;
-        padding-left: 8px;
-        transition: color $transition-duration;
-
-        &:hover {
-          color: $primary-color;
+    
+    &__form {
+      padding: 25px 20px;
+      
+      &-actions {
+        flex-direction: column;
+        
+        button {
+          width: 100%;
         }
+      }
+    }
+    
+    &__orders {
+      padding: 30px 20px;
+      
+      h2 {
+        font-size: 1.6rem;
+      }
+      
+      &-item {
+        padding: 20px;
       }
     }
   }
 }
 
-.user-page__orders-toggle {
-  text-align: center;
-  margin: 30px 0;
-
-  button {
-    background-color: $primary-color;
-    color: white;
-    border: none;
-    border-radius: $border-radius;
-    padding: 14px 35px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color $transition-duration, transform $transition-duration;
-
-    &:hover {
-      background-color: $secondary-color;
-      transform: scale(1.05);
+@media (max-width: 480px) {
+  .user-page {
+    padding: 30px 20px;
+    margin: 20px 10px;
+    
+    &__title {
+      font-size: 1.8rem;
+    }
+    
+    &__form {
+      padding: 20px 15px;
+    }
+    
+    &__orders {
+      padding: 25px 15px;
+      
+      &-item {
+        padding: 15px;
+        
+        ul li {
+          font-size: 0.9rem;
+        }
+      }
+    }
+    
+    &__btn-submit,
+    &__btn-cancel,
+    &__btn-edit {
+      padding: 12px 25px;
+      font-size: 0.95rem;
     }
   }
 }

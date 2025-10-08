@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { useUser } from "../UserContext";
+import "../styles/auth.scss";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setUserName, setUserId } = useUser();
+  const { updateUserFromToken } = useUser();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,24 +27,23 @@ const Login = () => {
         const token = response.data.token;
         localStorage.setItem("token", token);
 
-        const decoded = jwtDecode(token);
-        setUserName(decoded.userName);
-        setUserId(decoded.userId);
-        localStorage.setItem("userId", decoded.userId); // критично
+        // Обновляем все данные пользователя из токена (включая role)
+        updateUserFromToken();
 
         navigate("/");
       } else {
-        setError("Ошибка при входе");
+        setError("Błąd podczas logowania");
       }
     } catch (err) {
       console.error(err);
-      setError("Произошла ошибка при входе");
+      setError("Wystąpił błąd podczas logowania");
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="auth-container">
+      <div>
+        <h2>Zaloguj się</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -55,7 +54,7 @@ const Login = () => {
         />
         <input
           type="password"
-          placeholder="Пароль"
+          placeholder="Hasło"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -63,6 +62,7 @@ const Login = () => {
         <button type="submit">Zaloguj</button>
       </form>
       {error && <p>{error}</p>}
+      </div>
     </div>
   );
 };

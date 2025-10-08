@@ -4,6 +4,7 @@ import ProductList from "../components/ProductList";
 import { useUser } from "../UserContext";
 import "../styles/main.scss";
 import Onas from "../components/Onas";
+import Reviews from "../components/Reviews";
 
 const Main = () => {
   const { userName, userId } = useUser();
@@ -13,21 +14,12 @@ const Main = () => {
   const [error, setError] = useState("");
   const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 500 });
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
   const [sortBy, setSortBy] = useState("name-asc");
+  const [selectedCategory, setSelectedCategory] = useState("wszystkie");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/cake")
-      .then((response) => {
-        setProducts(response.data);
-        setFilteredProducts(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError("Ошибка при загрузке товаров");
-        setLoading(false);
-      });
+    fetchProducts();
   }, []);
 
   useEffect(() => {
@@ -56,6 +48,11 @@ const Main = () => {
       );
     }
 
+    // Фильтрация по категории
+    if (selectedCategory && selectedCategory !== "wszystkie") {
+      filtered = filtered.filter((product) => product.category === selectedCategory);
+    }
+
     // Фильтрация по цене
     filtered = filtered.filter(
       (product) =>
@@ -81,11 +78,26 @@ const Main = () => {
     }
 
     setFilteredProducts(filtered);
-  }, [searchTerm, priceRange, sortBy, products]);
+  }, [searchTerm, priceRange, sortBy, selectedCategory, products]);
+
+  const fetchProducts = () => {
+    setLoading(true);
+    axios
+      .get("http://localhost:5000/api/cake")
+      .then((response) => {
+        setProducts(response.data);
+        setFilteredProducts(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Błąd podczas ładowania produktów");
+        setLoading(false);
+      });
+  };
 
   const addToCart = async (product) => {
     if (!userId) {
-      alert("Пожалуйста, войдите в систему, чтобы добавить товар в корзину");
+      alert("Proszę zalogować się, aby dodać produkt do koszyka");
       return;
     }
 
@@ -99,10 +111,10 @@ const Main = () => {
 
       if (response.data.success) {
         setCart([...cart, response.data.product]);
-        alert("Товар добавлен в корзину");
+        alert("Produkt dodany do koszyka");
       }
     } catch (error) {
-      console.error("Ошибка при добавлении товара в корзину", error);
+      console.error("Błąd podczas dodawania produktu do koszyka", error);
     }
   };
 
@@ -136,7 +148,7 @@ const Main = () => {
           <label>Cena:</label>
           <input
             type="number"
-            placeholder="Мин"
+            placeholder="Min"
             value={priceRange.min}
             onChange={(e) => handlePriceChange(e, "min")}
             min="0"
@@ -144,31 +156,82 @@ const Main = () => {
           <span>-</span>
           <input
             type="number"
-            placeholder="Макс"
+            placeholder="Max"
             value={priceRange.max}
             onChange={(e) => handlePriceChange(e, "max")}
             min="0"
           />
         </div>
+        <div className="filter-category">
+          <label>Kategoria:</label>
+          <select 
+            value={selectedCategory} 
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="wszystkie">Wszystkie</option>
+            <option value="domowe">Domowe</option>
+            <option value="weselne">Weselne</option>
+            <option value="dziecięce">Dziecięce</option>
+            <option value="świąteczne">Świąteczne</option>
+            <option value="piękne">Piękne</option>
+          </select>
+        </div>
         <div className="filter-sort">
           <label>Sortowanie:</label>
           <select value={sortBy} onChange={handleSortChange}>
             <option value="name-asc">Po nazwie (A-Z)</option>
-            <option value="name-desc">Po nazwie (Z-А)</option>
-            <option value="price-asc">По цене (rosnący)</option>
-            <option value="price-desc">Po cenie (malejący)</option>
+            <option value="name-desc">Po nazwie (Z-A)</option>
+            <option value="price-asc">Po cenie (rosnąco)</option>
+            <option value="price-desc">Po cenie (malejąco)</option>
           </select>
         </div>
       </div>
 
       {loading && <p>Ladowanie...</p>}
       {error && <p>{error}</p>}
+      
+      {!loading && products.length > 0 && filteredProducts.length === 0 && (
+        <div style={{ 
+          background: 'rgba(255, 105, 180, 0.1)', 
+          padding: '30px', 
+          borderRadius: '15px',
+          marginTop: '30px'
+        }}>
+          <p style={{ fontSize: '1.2rem', color: '#ff69b4', fontWeight: '600' }}>
+            Nie znaleziono tortów z wybranymi filtrami 🍰
+          </p>
+          <p style={{ color: '#666' }}>
+            Łącznie tortów: {products.length} | Znaleziono po filtrach: {filteredProducts.length}
+          </p>
+          <p style={{ color: '#666' }}>
+            Cena: {priceRange.min} - {priceRange.max} zł
+          </p>
+          <button 
+            onClick={() => {
+              setPriceRange({ min: 0, max: 10000 });
+              setSearchTerm("");
+              setSelectedCategory("wszystkie");
+            }}
+            style={{
+              background: 'linear-gradient(135deg, #ff69b4, #ff1493)',
+              color: 'white',
+              border: 'none',
+              padding: '12px 25px',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              marginTop: '15px'
+            }}
+          >
+            Resetuj filtry
+          </button>
+        </div>
+      )}
 
-      <div className="product-grid">
-        <ProductList products={filteredProducts} addToCart={addToCart} />
-      </div>
+      <ProductList products={filteredProducts} addToCart={addToCart} onProductDeleted={fetchProducts} />
 
       <Onas />
+      <Reviews />
     </div>
   );
 };

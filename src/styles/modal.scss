@@ -1,46 +1,204 @@
-/* modal.scss */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap');
+
+$primary-color: #ff69b4;
+$accent-color: #ff1493;
+$border-radius: 20px;
+$transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
 .modal-overlay {
-    position: fixed;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-content {
+  background: white;
+  padding: 0;
+  border-radius: $border-radius;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+  animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  
+  &::before {
+    content: '';
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Темный фон для затемнения */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Чтобы модальное окно было поверх других элементов */
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, $primary-color, $accent-color, #ffd700);
+    border-radius: $border-radius $border-radius 0 0;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: $transition;
+  box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
   }
   
+  &:active {
+    transform: rotate(90deg) scale(0.95);
+  }
+}
+
+.modal-body {
+  padding: 50px 40px 40px;
+  text-align: center;
+  
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2d2d2d;
+    margin-bottom: 25px;
+    line-height: 1.3;
+  }
+  
+  img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    margin: 25px 0;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #666;
+    margin: 15px 0;
+    line-height: 1.6;
+    text-align: left;
+    
+    strong {
+      color: $primary-color;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    &:last-child {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: $primary-color;
+      text-align: center;
+      margin-top: 25px;
+      
+      strong {
+        display: inline;
+        font-size: 1.8rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
   .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    position: relative;
+    width: 95%;
+    max-height: 85vh;
   }
   
-  .modal-body img {
-    max-width: 100%;
-    height: auto;
-    margin-top: 20px;
+  .modal-body {
+    padding: 40px 25px 30px;
+    
+    h2 {
+      font-size: 1.8rem;
+    }
+    
+    img {
+      max-height: 300px;
+    }
+    
+    p {
+      font-size: 1rem;
+      
+      &:last-child {
+        font-size: 1.5rem;
+        
+        strong {
+          font-size: 1.5rem;
+        }
+      }
+    }
   }
   
   .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
   }
-  
-  .close-button:hover {
-    background-color: darkred;
+}
+
+@media (max-width: 480px) {
+  .modal-body {
+    padding: 35px 20px 25px;
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+    
+    img {
+      max-height: 250px;
+    }
+    
+    p {
+      font-size: 0.95rem;
+    }
   }
-  
+}

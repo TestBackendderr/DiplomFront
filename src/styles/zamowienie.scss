@@ -1,33 +1,261 @@
-// src/styles/zamowienie.scss
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
+
+$primary-color: #ff69b4;
+$accent-color: #ff1493;
+$gold: #ffd700;
+$light-pink: #fff0f5;
+$border-radius: 20px;
+$transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
 .zamowienie-container {
-    padding: 20px;
+  padding: 60px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 80vh;
+  
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, $primary-color, $accent-color, $gold);
+      border-radius: 2px;
+    }
+  }
+  
+  > p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 50px;
+  }
+  
+  form {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 10px 40px rgba(255, 105, 180, 0.15);
+    border: 1px solid rgba(255, 105, 180, 0.1);
+  }
+}
+
+.order-summary {
+  margin-bottom: 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, rgba(255, 240, 245, 0.6), rgba(255, 255, 255, 0.8));
+  border-radius: $border-radius;
+  border: 2px solid rgba(255, 105, 180, 0.1);
+  
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+  
+  p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #2d2d2d;
+    margin: 12px 0;
+    padding: 10px 15px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    
+    strong {
+      color: $accent-color;
+      font-weight: 700;
+    }
+  }
+  
+  > p:last-child {
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    
+    strong {
+      color: white;
+    }
+  }
+}
+
+.order-details {
+  margin-bottom: 30px;
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: $primary-color;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    border: 2px solid $light-pink;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: $transition;
+    background: white;
+    color: #2d2d2d;
+    box-sizing: border-box;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    &:hover {
+      border-color: lighten($primary-color, 10%);
+    }
+  }
+  
+  select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff69b4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    padding-right: 45px;
+  }
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 18px 40px;
+  background: linear-gradient(135deg, $gold 0%, #ffed4e 100%);
+  color: #2d2d2d;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  transition: $transition;
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(255, 215, 0, 0.5);
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.error {
+  background: rgba(255, 68, 68, 0.1);
+  color: #cc0000;
+  padding: 15px 25px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  margin: 20px 0;
+  border: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+@media (max-width: 768px) {
+  .zamowienie-container {
+    padding: 40px 20px;
+    
+    h2 {
+      font-size: 2.2rem;
+    }
+    
+    form {
+      padding: 30px 25px;
+    }
   }
   
   .order-summary {
-    margin-bottom: 20px;
+    padding: 25px 20px;
+    
+    h3 {
+      font-size: 1.5rem;
+    }
+    
+    p {
+      font-size: 1rem;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    > p:last-child {
+      font-size: 1.2rem;
+    }
+  }
+  
+  button[type="submit"] {
+    padding: 16px 30px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .zamowienie-container {
+    padding: 30px 15px;
+    
+    h2 {
+      font-size: 1.8rem;
+    }
+    
+    form {
+      padding: 25px 20px;
+    }
+  }
+  
+  .order-summary {
+    padding: 20px 15px;
+    
+    h3 {
+      font-size: 1.3rem;
+    }
   }
   
   .order-details {
-    margin-bottom: 20px;
+    input,
+    select {
+      padding: 12px 15px;
+    }
   }
-  
-  .order-details label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .order-details input,
-  .order-details select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
+}
