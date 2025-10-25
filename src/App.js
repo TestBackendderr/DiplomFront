@@ -9,6 +9,8 @@ import Register from './components/Register';
 import Korzina from './components/Korzina';
 import UserPage from './components/UserPage';
 import Zamowienie from './components/Zamowienie'; // Импортируем новую страницу
+import AdminDashboard from './components/AdminDashboard';
+import AdminPanel2 from './components/AdminPanel2';
 import ProtectedRoute from './components/ProtectedRoute';
 import { UserProvider } from './UserContext';
 
@@ -41,6 +43,16 @@ const App = () => {
               <Zamowienie />
             </ProtectedRoute>
           } /> {/* Новая страница */}
+          <Route path="/admin" element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } /> {/* Admin Dashboard */}
+          <Route path="/admin-panel2" element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminPanel2 />
+            </ProtectedRoute>
+          } /> {/* Admin Panel 2 */}
         </Routes>
       </Router>
     </UserProvider>

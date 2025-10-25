@@ -70,9 +70,17 @@ const Navbar = () => {
               Witaj, {userName}
             </Link>
             {userRole === 'admin' && (
-              <Link to="/add-product" className="navbar-link">
-                Dodaj Produkt
-              </Link>
+              <>
+                <Link to="/add-product" className="navbar-link">
+                  Dodaj Produkt
+                </Link>
+                <Link to="/admin" className="navbar-link">
+                  Admin Panel
+                </Link>
+                <Link to="/admin-panel2" className="navbar-link">
+                  Użytkownicy
+                </Link>
+              </>
             )}
             <button onClick={handleLogout}>Wyloguj</button>
           </div>
