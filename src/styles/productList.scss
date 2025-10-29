@@ -1,10 +1,13 @@
 /* src/styles/productList.scss */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&family=Dancing+Script:wght@600;700&display=swap');
 
-$primary-color: #ff69b4;
-$accent-color: #ff1493;
+$primary-color: #ffb6d9;
+$accent-color: #ff8fa3;
+$coral: #ff8fa3;
 $gold: #ffd700;
-$border-radius: 20px;
+$cream: #fff8f3;
+$peach: #ffe8e0;
+$border-radius: 25px;
 $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
 .product-cards {
@@ -16,18 +19,20 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .product-card {
-  background: white;
+  background: rgba(255, 248, 243, 0.95);
+  backdrop-filter: blur(15px);
   border-radius: $border-radius;
   padding: 0;
   width: 100%;
   max-width: 320px;
-  box-shadow: 0 10px 40px rgba(255, 105, 180, 0.12);
+  box-shadow: 0 10px 40px rgba(255, 182, 217, 0.15),
+              0 1px 0 rgba(255, 182, 217, 0.1) inset;
   text-align: center;
   transition: $transition;
   cursor: pointer;
   overflow: hidden;
   position: relative;
-  border: 2px solid transparent;
+  border: 2px solid rgba(255, 182, 217, 0.2);
   
   &::before {
     content: '';
@@ -39,23 +44,46 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     background: linear-gradient(90deg, $primary-color, $accent-color, $gold);
     opacity: 0;
     transition: $transition;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: $border-radius;
+    padding: 2px;
+    background: linear-gradient(135deg, $primary-color, $accent-color, $gold);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
   }
   
   &:hover {
-    transform: translateY(-12px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(255, 105, 180, 0.25);
-    border-color: rgba(255, 105, 180, 0.3);
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 25px 60px rgba(255, 182, 217, 0.25),
+                0 2px 0 rgba(255, 182, 217, 0.15) inset;
+    border-color: rgba(255, 182, 217, 0.4);
     
     &::before {
       opacity: 1;
     }
     
+    &::after {
+      opacity: 0.6;
+    }
+    
     img {
-      transform: scale(1.1);
+      transform: scale(1.12);
     }
     
     .product-badge {
-      transform: rotate(360deg);
+      transform: rotate(360deg) scale(1.1);
     }
   }
   
@@ -65,7 +93,8 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     overflow: hidden;
     border-radius: $border-radius $border-radius 0 0;
     position: relative;
-    background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+    background: linear-gradient(135deg, #fff0f5 0%, #ffe8e0 50%, #fff5e6 100%);
+    box-shadow: 0 4px 20px rgba(255, 182, 217, 0.1) inset;
   }
   
   img {
@@ -79,7 +108,7 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: absolute;
     top: 15px;
     right: 15px;
-    background: linear-gradient(135deg, $primary-color, $accent-color);
+    background: linear-gradient(135deg, $accent-color, $primary-color);
     color: white;
     padding: 8px 16px;
     border-radius: 25px;
@@ -87,35 +116,48 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+    box-shadow: 0 4px 20px rgba(255, 182, 217, 0.5),
+                0 1px 0 rgba(255, 255, 255, 0.3) inset;
     transition: $transition;
+    z-index: 2;
+    backdrop-filter: blur(10px);
   }
   
   .card-content {
     padding: 25px;
+    position: relative;
+    z-index: 1;
   }
   
   h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
     margin: 0 0 12px 0;
-    color: #2d2d2d;
+    color: #3d3d3d;
     line-height: 1.3;
+    background: linear-gradient(135deg, #ff8fa3 0%, #ffb6d9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   
   p {
     font-size: 0.95rem;
-    color: #666;
+    color: #777;
     margin: 0 0 20px 0;
     font-weight: 400;
+    font-style: italic;
   }
   
   .price {
     font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    color: $primary-color;
+    background: linear-gradient(135deg, $accent-color 0%, $primary-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin: 15px 0;
     
     span {
@@ -132,6 +174,8 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   justify-content: center;
   margin-top: 20px;
   padding: 0 25px 25px;
+  position: relative;
+  z-index: 10;
 }
 
 .add-to-cart-btn,
@@ -151,6 +195,9 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  position: relative;
+  z-index: 11;
+  pointer-events: auto;
   
   svg {
     transition: $transition;
@@ -162,16 +209,18 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .add-to-cart-btn {
-  background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+  background: linear-gradient(135deg, $accent-color 0%, $primary-color 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+  box-shadow: 0 4px 20px rgba(255, 182, 217, 0.35),
+              0 1px 0 rgba(255, 255, 255, 0.2) inset;
   
   &:hover {
-    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+    box-shadow: 0 6px 25px rgba(255, 182, 217, 0.5),
+                0 2px 0 rgba(255, 255, 255, 0.3) inset;
     transform: translateY(-2px);
     
     svg {
-      transform: scale(1.2);
+      transform: scale(1.2) rotate(-5deg);
     }
   }
 }

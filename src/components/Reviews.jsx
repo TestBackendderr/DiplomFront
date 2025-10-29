@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useUser } from "../UserContext";
 import { FaStar, FaTrash } from "react-icons/fa";
+import AlertModal from "./AlertModal";
+import ConfirmModal from "./ConfirmModal";
 import "../styles/reviews.scss";
 
 const Reviews = () => {
@@ -11,6 +13,8 @@ const Reviews = () => {
   const [comment, setComment] = useState("");
   const [showForm, setShowForm] = useState(false);
   const { userName, userId, userRole } = useUser();
+  const [alert, setAlert] = useState({ show: false, message: "", type: "info" });
+  const [confirm, setConfirm] = useState({ show: false, message: "", onConfirm: null });
 
   useEffect(() => {
     fetchReviews();
@@ -31,7 +35,7 @@ const Reviews = () => {
     e.preventDefault();
     
     if (!userId) {
-      alert("Proszę zalogować się, aby dodać opinię");
+      setAlert({ show: true, message: "Proszę zalogować się, aby dodać opinię", type: "warning" });
       return;
     }
 
@@ -43,32 +47,36 @@ const Reviews = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("Opinia została dodana!");
+      setAlert({ show: true, message: "Opinia została dodana!", type: "success" });
       setComment("");
       setRating(5);
       setShowForm(false);
       fetchReviews();
     } catch (error) {
       console.error("Błąd podczas dodawania opinii:", error);
-      alert("Błąd: " + (error.response?.data?.message || "Nie udało się dodać opinii"));
+      setAlert({ show: true, message: "Błąd: " + (error.response?.data?.message || "Nie udało się dodać opinii"), type: "error" });
     }
   };
 
-  const deleteReview = async (reviewId) => {
-    if (!window.confirm("Czy na pewno chcesz usunąć tę opinię?")) {
-      return;
-    }
+  const handleDeleteClick = (reviewId) => {
+    setConfirm({
+      show: true,
+      message: "Czy na pewno chcesz usunąć tę opinię?",
+      onConfirm: () => deleteReview(reviewId)
+    });
+  };
 
+  const deleteReview = async (reviewId) => {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`http://localhost:5000/api/reviews/${reviewId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      alert("Opinia została usunięta!");
+      setAlert({ show: true, message: "Opinia została usunięta!", type: "success" });
       fetchReviews();
     } catch (error) {
       console.error("Błąd podczas usuwania opinii:", error);
-      alert("Nie udało się usunąć opinii");
+      setAlert({ show: true, message: "Nie udało się usunąć opinii", type: "error" });
     }
   };
 
@@ -150,7 +158,7 @@ const Reviews = () => {
                     {userRole === 'admin' && (
                       <button
                         className="delete-review-btn"
-                        onClick={() => deleteReview(review.id)}
+                        onClick={() => handleDeleteClick(review.id)}
                       >
                         <FaTrash size={14} />
                       </button>
@@ -164,6 +172,21 @@ const Reviews = () => {
           )}
         </div>
       </div>
+      <AlertModal
+        message={alert.message}
+        type={alert.type}
+        show={alert.show}
+        onClose={() => setAlert({ show: false, message: "", type: "info" })}
+      />
+      <ConfirmModal
+        message={confirm.message}
+        show={confirm.show}
+        onConfirm={() => {
+          if (confirm.onConfirm) confirm.onConfirm();
+          setConfirm({ show: false, message: "", onConfirm: null });
+        }}
+        onCancel={() => setConfirm({ show: false, message: "", onConfirm: null })}
+      />
     </div>
   );
 };

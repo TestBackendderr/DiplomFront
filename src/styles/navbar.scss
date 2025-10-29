@@ -1,49 +1,72 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600&family=Dancing+Script:wght@600;700&display=swap');
 
-$primary-color: #ff69b4;
-$accent-color: #ff1493;
+$primary-color: #ffb6d9;
+$accent-color: #ff8fa3;
+$coral: #ff8fa3;
+$cream: #fff8f3;
+$gold: #ffd700;
 $light-pink: #fff0f5;
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 50px;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  color: #2d2d2d;
-  box-shadow: 0 4px 25px rgba(255, 105, 180, 0.1);
+  padding: 18px 50px;
+  background: rgba(255, 248, 243, 0.95);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  color: #3d3d3d;
+  box-shadow: 0 4px 30px rgba(255, 182, 217, 0.12), 
+              0 1px 0 rgba(255, 143, 163, 0.1) inset;
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 3px solid transparent;
-  border-image: linear-gradient(90deg, $primary-color, $accent-color, #ffd700) 1;
+  border-bottom: 2px solid rgba(255, 182, 217, 0.2);
+  transition: all 0.3s ease;
 }
 
 .navbar-logo {
   text-decoration: none;
   
   h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 900;
-    background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff8fa3 0%, #ffb6d9 50%, #ff8fa3 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    background-size: 200% auto;
     margin: 0;
-    transition: all 0.3s ease;
-    letter-spacing: -0.5px;
+    transition: all 0.4s ease;
+    letter-spacing: 1px;
+    position: relative;
+    animation: shimmer 3s ease-in-out infinite;
     
     &::before {
-      content: '🍰 ';
+      content: '🎂';
+      margin-right: 8px;
+      font-size: 1.2em;
+      display: inline-block;
+      animation: float 2s ease-in-out infinite;
     }
     
     &:hover {
-      transform: scale(1.05);
-      filter: brightness(1.1);
+      transform: scale(1.08);
+      filter: brightness(1.15);
+      animation-play-state: paused;
     }
   }
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
 }
 
 .navbar-links {
@@ -60,54 +83,79 @@ $light-pink: #fff0f5;
 
 .navbar-link {
   position: relative;
-  color: #2d2d2d;
-  font-weight: 600;
+  color: #4a4a4a;
+  font-weight: 500;
   font-family: 'Poppins', sans-serif;
   text-decoration: none;
   padding: 10px 18px;
-  border-radius: 12px;
+  border-radius: 25px;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   font-size: 0.95rem;
+  background: transparent;
   
-  &::after {
+  &::before {
     content: '';
     position: absolute;
-    bottom: 5px;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 70%;
-    height: 3px;
-    background: linear-gradient(90deg, $primary-color, $accent-color);
-    border-radius: 2px;
-    transition: transform 0.3s ease;
+    inset: 0;
+    border-radius: 25px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, $primary-color, $accent-color, $gold);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   
   &:hover {
-    background-color: rgba(255, 105, 180, 0.08);
-    color: $primary-color;
+    background: linear-gradient(135deg, rgba(255, 182, 217, 0.15), rgba(255, 143, 163, 0.1));
+    color: $coral;
+    transform: translateY(-1px);
     
-    &::after {
-      transform: translateX(-50%) scaleX(1);
+    &::before {
+      opacity: 1;
     }
   }
 }
 
 .navbar button {
-  background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+  background: linear-gradient(135deg, $accent-color 0%, $primary-color 100%);
   color: white;
   border: none;
   padding: 10px 24px;
-  border-radius: 12px;
+  border-radius: 25px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 143, 163, 0.3),
+              0 1px 0 rgba(255, 255, 255, 0.2) inset;
   font-size: 0.9rem;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+    box-shadow: 0 6px 25px rgba(255, 143, 163, 0.4),
+                0 2px 0 rgba(255, 255, 255, 0.2) inset;
+    
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
   }
   
   &:active {
@@ -118,38 +166,51 @@ $light-pink: #fff0f5;
 .cart-icon {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: white;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(255, 182, 217, 0.2), rgba(255, 143, 163, 0.15));
   padding: 10px 20px;
-  border-radius: 25px;
-  border: 2px solid $light-pink;
-  color: $primary-color;
+  border-radius: 30px;
+  border: 2px solid rgba(255, 182, 217, 0.3);
+  color: $coral;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
+  backdrop-filter: blur(10px);
+  
+  svg {
+    transition: all 0.3s ease;
+  }
   
   span {
-    background: linear-gradient(135deg, $primary-color, $accent-color);
+    background: linear-gradient(135deg, $accent-color, $coral);
     color: white;
-    border-radius: 50%;
-    padding: 2px 8px;
-    font-size: 0.8rem;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.75rem;
     font-weight: 700;
-    min-width: 24px;
+    min-width: 26px;
     text-align: center;
+    box-shadow: 0 2px 8px rgba(255, 143, 163, 0.4);
+    transition: all 0.3s ease;
   }
   
   &:hover {
-    background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+    background: linear-gradient(135deg, $accent-color 0%, $primary-color 100%);
     color: white;
-    border-color: $primary-color;
+    border-color: $coral;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3);
+    box-shadow: 0 6px 25px rgba(255, 143, 163, 0.35);
+    
+    svg {
+      transform: scale(1.15) rotate(-5deg);
+    }
     
     span {
       background: white;
-      color: $primary-color;
+      color: $coral;
+      transform: scale(1.1);
+      box-shadow: 0 3px 10px rgba(255, 143, 163, 0.5);
     }
   }
 }
@@ -207,3 +268,4 @@ $light-pink: #fff0f5;
     font-size: 1.5rem;
   }
 }
+

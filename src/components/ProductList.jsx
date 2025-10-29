@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
+import AlertModal from "./AlertModal";
+import ConfirmModal from "./ConfirmModal";
 import { useUser } from "../UserContext";
 import axios from "axios";
 import { FaShoppingCart, FaTrash } from "react-icons/fa";
@@ -10,6 +12,8 @@ const ProductList = ({ products, onProductDeleted }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cartMessage, setCartMessage] = useState("");
+  const [alert, setAlert] = useState({ show: false, message: "", type: "info" });
+  const [confirm, setConfirm] = useState({ show: false, message: "", onConfirm: null });
 
   const openModal = (product) => {
     setSelectedProduct(product);
@@ -23,14 +27,14 @@ const ProductList = ({ products, onProductDeleted }) => {
 
   const addToCart = async (productId) => {
     if (!userName) {
-      alert("Proszę zalogować się, aby dodać produkty do koszyka");
+      setAlert({ show: true, message: "Proszę zalogować się, aby dodać produkty do koszyka", type: "warning" });
       return;
     }
 
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Proszę zalogować się, aby dodać produkty do koszyka");
+        setAlert({ show: true, message: "Proszę zalogować się, aby dodać produkty do koszyka", type: "warning" });
         return;
       }
 
@@ -40,34 +44,37 @@ const ProductList = ({ products, onProductDeleted }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // if (response.data.success) {
-      //   setCartMessage('Produkt dodany do koszyka!');
-      //   setTimeout(() => setCartMessage(''), 3000);
-      // }
+      if (response.data.success) {
+        setAlert({ show: true, message: "Produkt dodany do koszyka!", type: "success" });
+      }
     } catch (error) {
       console.error("Błąd podczas dodawania produktu do koszyka", error);
-      setCartMessage("Błąd podczas dodawania produktu do koszyka");
+      setAlert({ show: true, message: "Błąd podczas dodawania produktu do koszyka", type: "error" });
     }
   };
 
-  const deleteProduct = async (productId) => {
-    if (!window.confirm("Czy na pewno chcesz usunąć ten tort?")) {
-      return;
-    }
+  const handleDeleteClick = (productId) => {
+    setConfirm({
+      show: true,
+      message: "Czy na pewno chcesz usunąć ten tort?",
+      onConfirm: () => deleteProduct(productId)
+    });
+  };
 
+  const deleteProduct = async (productId) => {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`http://localhost:5000/api/cake/${productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
-      alert("Tort został pomyślnie usunięty!");
+      setAlert({ show: true, message: "Tort został pomyślnie usunięty!", type: "success" });
       if (onProductDeleted) {
         onProductDeleted();
       }
     } catch (error) {
       console.error("Błąd podczas usuwania produktu", error);
-      alert("Błąd podczas usuwania: " + (error.response?.data?.message || "Nie udało się usunąć tortu"));
+      setAlert({ show: true, message: "Błąd podczas usuwania: " + (error.response?.data?.message || "Nie udało się usunąć tortu"), type: "error" });
     }
   };
 
@@ -124,7 +131,7 @@ const ProductList = ({ products, onProductDeleted }) => {
                   className="delete-product-btn"
                   onClick={(e) => {
                     e.stopPropagation();
-                    deleteProduct(product.id);
+                    handleDeleteClick(product.id);
                   }}
                 >
                   <FaTrash size={16} />
@@ -137,6 +144,21 @@ const ProductList = ({ products, onProductDeleted }) => {
       {isModalOpen && selectedProduct && (
         <Modal product={selectedProduct} closeModal={closeModal} />
       )}
+      <AlertModal
+        message={alert.message}
+        type={alert.type}
+        show={alert.show}
+        onClose={() => setAlert({ show: false, message: "", type: "info" })}
+      />
+      <ConfirmModal
+        message={confirm.message}
+        show={confirm.show}
+        onConfirm={() => {
+          if (confirm.onConfirm) confirm.onConfirm();
+          setConfirm({ show: false, message: "", onConfirm: null });
+        }}
+        onCancel={() => setConfirm({ show: false, message: "", onConfirm: null })}
+      />
     </div>
   );
 };

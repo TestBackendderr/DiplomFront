@@ -11,6 +11,7 @@ import UserPage from './components/UserPage';
 import Zamowienie from './components/Zamowienie'; // Импортируем новую страницу
 import AdminDashboard from './components/AdminDashboard';
 import AdminPanel2 from './components/AdminPanel2';
+import AdminUserView from './components/AdminUserView';
 import ProtectedRoute from './components/ProtectedRoute';
 import { UserProvider } from './UserContext';
 
@@ -48,6 +49,11 @@ const App = () => {
               <AdminDashboard />
             </ProtectedRoute>
           } /> {/* Admin Dashboard */}
+          <Route path="/admin/user/:userId" element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminUserView />
+            </ProtectedRoute>
+          } /> {/* Admin User View */}
           <Route path="/admin-panel2" element={
             <ProtectedRoute requireAdmin={true}>
               <AdminPanel2 />

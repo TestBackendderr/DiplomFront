@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AlertModal from "./AlertModal";
 import "../styles/addproduct.scss";
 
 const AddProduct = () => {
@@ -10,6 +11,7 @@ const AddProduct = () => {
   const [image, setImage] = useState(null);
   const [category, setCategory] = useState("domowe");
   const navigate = useNavigate();
+  const [alert, setAlert] = useState({ show: false, message: "", type: "info" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,10 +30,11 @@ const AddProduct = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      navigate("/");
+      setAlert({ show: true, message: "Produkt został pomyślnie dodany!", type: "success" });
+      setTimeout(() => navigate("/"), 1500);
     } catch (error) {
       console.error("Błąd podczas dodawania produktu", error);
-      alert("Błąd: " + (error.response?.data?.message || "Nie udało się dodać tortu"));
+      setAlert({ show: true, message: "Błąd: " + (error.response?.data?.message || "Nie udało się dodać tortu"), type: "error" });
     }
   };
 
@@ -73,6 +76,12 @@ const AddProduct = () => {
         <input type="file" onChange={(e) => setImage(e.target.files[0])} />
         <button type="submit">Dodaj tort</button>
       </form>
+      <AlertModal
+        message={alert.message}
+        type={alert.type}
+        show={alert.show}
+        onClose={() => setAlert({ show: false, message: "", type: "info" })}
+      />
     </div>
   );
 };

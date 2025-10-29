@@ -1,11 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap');
 
-$primary-color: #ff69b4;
-$accent-color: #ff1493;
+$primary-color: #ffb6d9;
+$accent-color: #ff8fa3;
+$coral: #ff8fa3;
 $gold: #ffd700;
+$gold-light: #ffed4e;
 $light-pink: #fff0f5;
-$cream: #fffaf0;
-$border-radius: 20px;
+$cream: #fff8f3;
+$peach: #ffe8e0;
+$border-radius: 25px;
 $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
 .korzina-container {
@@ -15,16 +18,23 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   min-height: 80vh;
   
   h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    font-weight: 900;
-    background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, $accent-color 0%, $primary-color 50%, $peach 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-align: center;
     margin-bottom: 50px;
     position: relative;
+    animation: shimmer 4s ease-in-out infinite;
+    
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
     
     &::before {
       content: '';
@@ -32,10 +42,22 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       bottom: -15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
+      width: 120px;
       height: 4px;
       background: linear-gradient(90deg, $primary-color, $accent-color, $gold);
       border-radius: 2px;
+      box-shadow: 0 2px 10px rgba(255, 182, 217, 0.4);
+    }
+    
+    &::after {
+      content: '🛒';
+      margin-left: 15px;
+      animation: float 2s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
     }
   }
   
@@ -55,10 +77,12 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .cart-card {
-  background: white;
-  border: 2px solid transparent;
+  background: rgba(255, 248, 243, 0.95);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 182, 217, 0.25);
   border-radius: $border-radius;
-  box-shadow: 0 8px 30px rgba(255, 105, 180, 0.12);
+  box-shadow: 0 8px 35px rgba(255, 182, 217, 0.15),
+              0 1px 0 rgba(255, 182, 217, 0.1) inset;
   padding: 25px;
   display: flex;
   gap: 25px;
@@ -74,22 +98,24 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     left: 0;
     width: 5px;
     height: 100%;
-    background: linear-gradient(180deg, $primary-color, $accent-color);
+    background: linear-gradient(180deg, $primary-color, $accent-color, $gold);
     opacity: 0;
     transition: $transition;
   }
   
   &:hover {
-    transform: translateX(5px);
-    box-shadow: 0 12px 40px rgba(255, 105, 180, 0.2);
-    border-color: rgba(255, 105, 180, 0.2);
+    transform: translateX(8px) translateY(-2px);
+    box-shadow: 0 15px 50px rgba(255, 182, 217, 0.25),
+                0 2px 0 rgba(255, 182, 217, 0.15) inset;
+    border-color: rgba(255, 182, 217, 0.4);
     
     &::before {
       opacity: 1;
     }
     
     .product-image {
-      transform: scale(1.05);
+      transform: scale(1.08);
+      box-shadow: 0 8px 25px rgba(255, 182, 217, 0.3);
     }
   }
 }
@@ -98,10 +124,11 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   width: 140px;
   height: 140px;
   object-fit: cover;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(255, 182, 217, 0.2);
   transition: $transition;
   flex-shrink: 0;
+  border: 2px solid rgba(255, 182, 217, 0.2);
 }
 
 .cart-info {
@@ -112,16 +139,22 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   
   h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     font-weight: 700;
-    color: #2d2d2d;
+    background: linear-gradient(135deg, #ff8fa3 0%, #ffb6d9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin: 0 0 10px 0;
   }
   
   > p {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: $primary-color;
+    background: linear-gradient(135deg, $accent-color 0%, $primary-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin: 5px 0;
     font-family: 'Poppins', sans-serif;
   }
@@ -134,32 +167,37 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   margin: 15px 0;
   
   button {
-    background: linear-gradient(135deg, $primary-color, $accent-color);
+    background: linear-gradient(135deg, $accent-color, $primary-color);
     color: white;
     border: none;
-    width: 35px;
-    height: 35px;
-    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     transition: $transition;
-    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.25);
+    box-shadow: 0 4px 15px rgba(255, 182, 217, 0.35),
+                0 1px 0 rgba(255, 255, 255, 0.2) inset;
     
     &:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 15px rgba(255, 105, 180, 0.35);
+      transform: scale(1.15);
+      box-shadow: 0 6px 20px rgba(255, 182, 217, 0.45),
+                  0 2px 0 rgba(255, 255, 255, 0.3) inset;
     }
     
     &:active {
-      transform: scale(0.95);
+      transform: scale(0.9);
     }
   }
   
   span {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 600;
-    color: #2d2d2d;
+    background: linear-gradient(135deg, #ff8fa3 0%, #ffb6d9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     min-width: 40px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
@@ -167,23 +205,27 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .remove-btn {
-  background: linear-gradient(135deg, #ff4444, #cc0000);
+  background: linear-gradient(135deg, #ff6b6b, #ff4444);
   color: white;
   border: none;
-  padding: 10px 24px;
-  border-radius: 12px;
+  padding: 8px 16px;
+  border-radius: 20px;
   cursor: pointer;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
   transition: $transition;
-  box-shadow: 0 4px 15px rgba(255, 68, 68, 0.25);
-  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3),
+              0 1px 0 rgba(255, 255, 255, 0.2) inset;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  align-self: flex-start;
+  margin-top: 10px;
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.35);
+    box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4),
+                0 2px 0 rgba(255, 255, 255, 0.3) inset;
   }
   
   &:active {
@@ -221,28 +263,57 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .checkout-btn {
-  background: linear-gradient(135deg, $gold 0%, #ffed4e 100%);
-  color: #2d2d2d;
+  background: linear-gradient(135deg, $gold 0%, $gold-light 100%);
+  color: #3d3d3d;
   border: none;
-  padding: 16px 50px;
-  border-radius: 15px;
+  padding: 18px 55px;
+  border-radius: 30px;
   cursor: pointer;
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   transition: $transition;
-  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.45),
+              0 2px 0 rgba(255, 255, 255, 0.3) inset;
   margin-top: 20px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '✨';
+    position: absolute;
+    left: 20px;
+    animation: sparkle 2s ease-in-out infinite;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
   
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 35px rgba(255, 215, 0, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(255, 215, 0, 0.55),
+                0 3px 0 rgba(255, 255, 255, 0.4) inset;
+    
+    &::after {
+      width: 400px;
+      height: 400px;
+    }
   }
   
   &:active {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 }
 

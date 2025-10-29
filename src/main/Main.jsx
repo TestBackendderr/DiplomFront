@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductList from "../components/ProductList";
 import { useUser } from "../UserContext";
+import AlertModal from "../components/AlertModal";
 import "../styles/main.scss";
 import Onas from "../components/Onas";
 import Reviews from "../components/Reviews";
@@ -17,6 +18,7 @@ const Main = () => {
   const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
   const [sortBy, setSortBy] = useState("name-asc");
   const [selectedCategory, setSelectedCategory] = useState("wszystkie");
+  const [alert, setAlert] = useState({ show: false, message: "", type: "info" });
 
   useEffect(() => {
     fetchProducts();
@@ -97,7 +99,7 @@ const Main = () => {
 
   const addToCart = async (product) => {
     if (!userId) {
-      alert("Proszę zalogować się, aby dodać produkt do koszyka");
+      setAlert({ show: true, message: "Proszę zalogować się, aby dodać produkt do koszyka", type: "warning" });
       return;
     }
 
@@ -111,10 +113,11 @@ const Main = () => {
 
       if (response.data.success) {
         setCart([...cart, response.data.product]);
-        alert("Produkt dodany do koszyka");
+        setAlert({ show: true, message: "Produkt dodany do koszyka", type: "success" });
       }
     } catch (error) {
       console.error("Błąd podczas dodawania produktu do koszyka", error);
+      setAlert({ show: true, message: "Błąd podczas dodawania produktu do koszyka", type: "error" });
     }
   };
 
@@ -232,6 +235,12 @@ const Main = () => {
 
       <Onas />
       <Reviews />
+      <AlertModal
+        message={alert.message}
+        type={alert.type}
+        show={alert.show}
+        onClose={() => setAlert({ show: false, message: "", type: "info" })}
+      />
     </div>
   );
 };

@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap');
+
+$primary-color: #ffb6d9;
+$accent-color: #ff8fa3;
+$success-color: #4caf50;
+$error-color: #f44336;
+$warning-color: #ff9800;
+$info-color: #2196f3;
+$border-radius: 25px;
+$transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+.alert-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.alert-modal-content {
+  background: rgba(255, 248, 243, 0.98);
+  backdrop-filter: blur(20px);
+  padding: 30px 40px;
+  border-radius: $border-radius;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+              0 1px 0 rgba(255, 255, 255, 0.2) inset;
+  position: relative;
+  animation: slideInDown 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border: 2px solid rgba(255, 182, 217, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    border-radius: $border-radius $border-radius 0 0;
+  }
+  
+  &.alert-success {
+    &::before {
+      background: linear-gradient(90deg, $success-color, #66bb6a);
+    }
+    border-color: rgba(76, 175, 80, 0.3);
+    box-shadow: 0 20px 60px rgba(76, 175, 80, 0.25),
+                0 1px 0 rgba(255, 255, 255, 0.2) inset;
+  }
+  
+  &.alert-error {
+    &::before {
+      background: linear-gradient(90deg, $error-color, #e57373);
+    }
+    border-color: rgba(244, 67, 54, 0.3);
+    box-shadow: 0 20px 60px rgba(244, 67, 54, 0.25),
+                0 1px 0 rgba(255, 255, 255, 0.2) inset;
+  }
+  
+  &.alert-warning {
+    &::before {
+      background: linear-gradient(90deg, $warning-color, #ffb74d);
+    }
+    border-color: rgba(255, 152, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(255, 152, 0, 0.25),
+                0 1px 0 rgba(255, 255, 255, 0.2) inset;
+  }
+  
+  &.alert-info {
+    &::before {
+      background: linear-gradient(90deg, $primary-color, $accent-color);
+    }
+  }
+}
+
+.alert-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.alert-message {
+  flex: 1;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #3d3d3d;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.alert-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 182, 217, 0.2);
+  color: #666;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: $transition;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  
+  &:hover {
+    background: rgba(255, 182, 217, 0.4);
+    transform: rotate(90deg) scale(1.1);
+    color: #3d3d3d;
+  }
+  
+  &:active {
+    transform: rotate(90deg) scale(0.95);
+  }
+}
+
+@media (max-width: 768px) {
+  .alert-modal-content {
+    padding: 25px 30px;
+    max-width: 90%;
+  }
+  
+  .alert-icon {
+    font-size: 2rem;
+  }
+  
+  .alert-message {
+    font-size: 1rem;
+  }
+  
+  .alert-close-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .alert-modal-content {
+    padding: 20px 25px;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .alert-close-btn {
+    top: 10px;
+    right: 10px;
+  }
+}
+

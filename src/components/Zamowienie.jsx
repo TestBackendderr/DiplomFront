@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "../UserContext";
 import axios from "axios";
+import AlertModal from "./AlertModal";
 import "../styles/zamowienie.scss";
 
 const Zamowienie = () => {
@@ -12,6 +13,7 @@ const Zamowienie = () => {
     address: "",
     paymentMethod: "card",
   });
+  const [alert, setAlert] = useState({ show: false, message: "", type: "info" });
 
   const userId = contextUserId || localStorage.getItem("userId");
 
@@ -101,10 +103,11 @@ const Zamowienie = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      alert("Zamówienie zostało pomyślnie złożone!");
+      setAlert({ show: true, message: "Zamówienie zostało pomyślnie złożone!", type: "success" });
     } catch (err) {
       console.error("Błąd podczas składania zamówienia:", err);
       setError("Nie udało się złożyć zamówienia");
+      setAlert({ show: true, message: "Nie udało się złożyć zamówienia", type: "error" });
     }
   };
 
@@ -161,6 +164,12 @@ const Zamowienie = () => {
           <button type="submit">Potwierdź zamówienie</button>
         </form>
       )}
+      <AlertModal
+        message={alert.message}
+        type={alert.type}
+        show={alert.show}
+        onClose={() => setAlert({ show: false, message: "", type: "info" })}
+      />
     </div>
   );
 };
