@@ -179,7 +179,8 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .add-to-cart-btn,
-.delete-product-btn {
+.delete-product-btn,
+.edit-product-btn {
   flex: 1;
   padding: 14px 20px;
   border: none;
@@ -221,6 +222,22 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     
     svg {
       transform: scale(1.2) rotate(-5deg);
+    }
+  }
+}
+
+.edit-product-btn {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  max-width: 60px;
+  
+  &:hover {
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+    transform: translateY(-2px);
+    
+    svg {
+      transform: scale(1.2);
     }
   }
 }
@@ -299,6 +316,7 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   .product-actions {
     flex-direction: column;
     
+    .edit-product-btn,
     .delete-product-btn {
       max-width: 100%;
     }

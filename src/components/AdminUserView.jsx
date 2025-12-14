@@ -10,13 +10,16 @@ const AdminUserView = () => {
   const [user, setUser] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingOrders, setLoadingOrders] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchUserData();
     fetchUserReviews();
     fetchUserCart();
+    fetchUserOrders();
   }, [userId]);
 
   const fetchUserData = async () => {
@@ -55,6 +58,21 @@ const AdminUserView = () => {
       setCartItems(response.data.cart || []);
     } catch (err) {
       console.error('Błąd ładowania koszyka:', err);
+    }
+  };
+
+  const fetchUserOrders = async () => {
+    setLoadingOrders(true);
+    try {
+      const token = localStorage.getItem('token');
+      const headers = { Authorization: `Bearer ${token}` };
+      
+      const response = await axios.get(`http://localhost:5000/api/admin/user/${userId}/orders`, { headers });
+      setOrders(response.data.orders || []);
+    } catch (err) {
+      console.error('Błąd ładowania zamówień:', err);
+    } finally {
+      setLoadingOrders(false);
     }
   };
 
@@ -154,6 +172,89 @@ const AdminUserView = () => {
                   </div>
                 </div>
                 <div className="review-comment">{review.comment}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="orders-section">
+        <h2>📦 Historia Zamówień</h2>
+        {loadingOrders ? (
+          <div className="loading-orders">
+            <p>Ładowanie zamówień...</p>
+          </div>
+        ) : orders.length === 0 ? (
+          <div className="no-orders">
+            <p>Użytkownik nie ma jeszcze żadnych zamówień.</p>
+          </div>
+        ) : (
+          <div className="orders-list">
+            {orders.map((order) => (
+              <div key={order.id} className="order-card">
+                <div className="order-header">
+                  <div className="order-id">
+                    <strong>Zamówienie #{order.id}</strong>
+                  </div>
+                  <div className="order-date">
+                    {new Date(order.createdAt).toLocaleDateString('pl-PL', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </div>
+                  <div className={`order-status status-${order.status}`}>
+                    {order.status === 'pending' && '⏳ Oczekujące'}
+                    {order.status === 'completed' && '✅ Zrealizowane'}
+                    {order.status === 'cancelled' && '❌ Anulowane'}
+                  </div>
+                </div>
+                <div className="order-details">
+                  <div className="order-info-item">
+                    <span className="info-label">Adres:</span>
+                    <span className="info-value">{order.address}</span>
+                  </div>
+                  <div className="order-info-item">
+                    <span className="info-label">Metoda płatności:</span>
+                    <span className="info-value">
+                      {order.paymentMethod === 'card' ? '💳 Karta' : '💵 Gotówka'}
+                    </span>
+                  </div>
+                  <div className="order-info-item">
+                    <span className="info-label">Suma:</span>
+                    <span className="info-value total-price">{parseFloat(order.totalPrice).toFixed(2)} zł</span>
+                  </div>
+                </div>
+                <div className="order-items">
+                  <h4>Produkty:</h4>
+                  <div className="items-list">
+                    {order.items.map((item) => (
+                      <div key={item.productId} className="order-item">
+                        <img
+                          src={
+                            item.product.image_url
+                              ? `http://localhost:5000${item.product.image_url}`
+                              : "/placeholder.jpg"
+                          }
+                          alt={item.product.name}
+                          className="order-item-image"
+                        />
+                        <div className="order-item-info">
+                          <h5>{item.product.name}</h5>
+                          <div className="order-item-details">
+                            <span>Ilość: {item.quantity}</span>
+                            <span>Cena za szt.: {parseFloat(item.price).toFixed(2)} zł</span>
+                            <span className="item-total">
+                              Suma: {(item.quantity * parseFloat(item.price)).toFixed(2)} zł
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
           </div>

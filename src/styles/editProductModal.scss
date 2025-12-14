@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
+
+$primary-color: #ffb6d9;
+$accent-color: #ff8fa3;
+$gold: #ffd700;
+$light-pink: #fff0f5;
+$border-radius: 20px;
+$transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+.edit-product-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.edit-product-modal {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(15px);
+  border-radius: $border-radius;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.edit-product-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 40px 20px;
+  border-bottom: 2px solid rgba(255, 105, 180, 0.1);
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+  }
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #666;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: $transition;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    &:hover {
+      background: rgba(255, 105, 180, 0.1);
+      color: $accent-color;
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.edit-product-modal form {
+  padding: 30px 40px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 2px solid $light-pink;
+    font-family: 'Poppins', sans-serif;
+    transition: $transition;
+    background: white;
+    color: #2d2d2d;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
+    }
+
+    &:hover {
+      border-color: lighten($primary-color, 10%);
+    }
+  }
+
+  select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff69b4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    padding-right: 45px;
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .file-select-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, $primary-color, $accent-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: $transition;
+    text-align: center;
+    margin-bottom: 8px;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  small {
+    color: #666;
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+
+  .image-preview {
+    margin-bottom: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid $light-pink;
+    max-width: 200px;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 2px solid rgba(255, 105, 180, 0.1);
+
+  button {
+    flex: 1;
+    padding: 14px 30px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: $transition;
+    border: none;
+
+    &.cancel-btn {
+      background: #f0f0f0;
+      color: #666;
+
+      &:hover {
+        background: #e0e0e0;
+        transform: translateY(-2px);
+      }
+    }
+
+    &.submit-btn {
+      background: linear-gradient(135deg, $gold 0%, #ffed4e 100%);
+      color: #2d2d2d;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .edit-product-modal {
+    max-width: 95%;
+    max-height: 95vh;
+  }
+
+  .edit-product-modal-header {
+    padding: 20px 25px 15px;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
+
+  .edit-product-modal form {
+    padding: 20px 25px 30px;
+    gap: 18px;
+  }
+
+  .form-group {
+    input,
+    textarea,
+    select {
+      padding: 12px 15px;
+      font-size: 0.95rem;
+    }
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+

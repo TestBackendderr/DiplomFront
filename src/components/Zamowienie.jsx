@@ -13,6 +13,8 @@ const Zamowienie = () => {
     address: "",
     paymentMethod: "card",
   });
+  const [userData, setUserData] = useState(null);
+  const [deliveryData, setDeliveryData] = useState(null);
   const [alert, setAlert] = useState({ show: false, message: "", type: "info" });
 
   const userId = contextUserId || localStorage.getItem("userId");
@@ -39,7 +41,7 @@ const Zamowienie = () => {
     }
   };
 
-  const fetchUserAddress = async () => {
+  const fetchUserProfile = async () => {
     const token = localStorage.getItem("token");
 
     if (!userId || !token) {
@@ -48,17 +50,33 @@ const Zamowienie = () => {
     }
 
     try {
-      const response = await axios.get(`http://localhost:5000/api/user-info`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const [userResponse, userInfoResponse] = await Promise.all([
+        axios.get(`http://localhost:5000/api/user`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        axios.get(`http://localhost:5000/api/user-info`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+      ]);
 
-      const fullAddress = `${response.data.userInfo.UserInfo.miasto}, ${response.data.userInfo.UserInfo.ulica} ${response.data.userInfo.UserInfo.nrdomu}`;
+      const userCoreData = userResponse.data?.userData || null;
+      const userDeliveryInfo = userInfoResponse.data?.userInfo?.UserInfo || null;
 
-      {
+      setUserData(userCoreData);
+      setDeliveryData(userDeliveryInfo);
+
+      if (
+        userDeliveryInfo?.miasto &&
+        userDeliveryInfo?.ulica &&
+        userDeliveryInfo?.nrdomu
+      ) {
+        const fullAddress = `${userDeliveryInfo.miasto}, ${userDeliveryInfo.ulica} ${userDeliveryInfo.nrdomu}`;
         setOrderDetails((prevDetails) => ({
           ...prevDetails,
           address: fullAddress,
         }));
+      } else {
+        setError("Uzupełnij dane dostawy w profilu użytkownika");
       }
     } catch (err) {
       setError("Nie udało się pobrać adresu dostawy");
@@ -68,7 +86,7 @@ const Zamowienie = () => {
   useEffect(() => {
     if (userId) {
       fetchCartItems();
-      fetchUserAddress();
+      fetchUserProfile();
     } else {
       console.log("Waiting for userId to be set...");
     }
@@ -140,15 +158,48 @@ const Zamowienie = () => {
           </div>
 
           <div className="order-details">
-            <label htmlFor="address">Adres dostawy:</label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              value={orderDetails.address}
-              onChange={handleChange}
-              required
-            />
+            <div className="order-details__section">
+              <h3>Dane użytkownika</h3>
+              {userData ? (
+                <>
+                  <p>
+                    {userData.imie} {userData.nazwisko}
+                  </p>
+                  <p>Email: {userData.email}</p>
+                </>
+              ) : (
+                <p>Ładowanie danych użytkownika...</p>
+              )}
+            </div>
+
+            <div className="order-details__section">
+              <h3>Dane dla dostawy</h3>
+              {deliveryData ? (
+                <>
+                  <p>Kraj: {deliveryData.kraj || "—"}</p>
+                  <p>Miasto: {deliveryData.miasto || "—"}</p>
+                  <p>
+                    Ulica: {deliveryData.ulica || "—"} {deliveryData.nrdomu || ""}
+                  </p>
+                  <p>Telefon: {deliveryData.telefon || "—"}</p>
+                  <label htmlFor="address">Adres dostawy:</label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={orderDetails.address}
+                    readOnly
+                  />
+                  <small>
+                    Adres pochodzi z sekcji „Dane dla dostawy”. Zmień go w profilu
+                    użytkownika, jeśli to konieczne.
+                  </small>
+                </>
+              ) : (
+                <p>Uzupełnij dane dostawy w profilu użytkownika.</p>
+              )}
+            </div>
+
             <label>Metoda płatności:</label>
             <select
               name="paymentMethod"

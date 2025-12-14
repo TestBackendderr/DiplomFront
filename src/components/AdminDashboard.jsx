@@ -95,7 +95,15 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <h1>Panel Administratora</h1>
+      <div className="dashboard-header">
+        <h1>Panel Administratora</h1>
+        <button 
+          onClick={() => navigate('/admin/orders')} 
+          className="orders-btn"
+        >
+          📦 Wszystkie Zamówienia
+        </button>
+      </div>
       
       {/* Контейнер статистики */}
       {stats && (

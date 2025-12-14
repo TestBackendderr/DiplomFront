@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import AlertModal from "./AlertModal";
 import ConfirmModal from "./ConfirmModal";
+import EditProductModal from "./EditProductModal";
 import { useUser } from "../UserContext";
 import axios from "axios";
-import { FaShoppingCart, FaTrash } from "react-icons/fa";
+import { FaShoppingCart, FaTrash, FaEdit } from "react-icons/fa";
 import "../styles/productList.scss";
 
 const ProductList = ({ products, onProductDeleted }) => {
   const { userName, userRole } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [editingProduct, setEditingProduct] = useState(null);
   const [cartMessage, setCartMessage] = useState("");
   const [alert, setAlert] = useState({ show: false, message: "", type: "info" });
   const [confirm, setConfirm] = useState({ show: false, message: "", onConfirm: null });
@@ -50,6 +53,23 @@ const ProductList = ({ products, onProductDeleted }) => {
     } catch (error) {
       console.error("Błąd podczas dodawania produktu do koszyka", error);
       setAlert({ show: true, message: "Błąd podczas dodawania produktu do koszyka", type: "error" });
+    }
+  };
+
+  const handleEditClick = (product, e) => {
+    e.stopPropagation();
+    setEditingProduct(product);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditClose = () => {
+    setIsEditModalOpen(false);
+    setEditingProduct(null);
+  };
+
+  const handleProductUpdated = () => {
+    if (onProductDeleted) {
+      onProductDeleted();
     }
   };
 
@@ -127,15 +147,25 @@ const ProductList = ({ products, onProductDeleted }) => {
                 Do koszyka
               </button>
               {userRole === 'admin' && (
-                <button
-                  className="delete-product-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteClick(product.id);
-                  }}
-                >
-                  <FaTrash size={16} />
-                </button>
+                <>
+                  <button
+                    className="edit-product-btn"
+                    onClick={(e) => handleEditClick(product, e)}
+                    title="Edytuj produkt"
+                  >
+                    <FaEdit size={16} />
+                  </button>
+                  <button
+                    className="delete-product-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteClick(product.id);
+                    }}
+                    title="Usuń produkt"
+                  >
+                    <FaTrash size={16} />
+                  </button>
+                </>
               )}
             </div>
           </div>
@@ -143,6 +173,13 @@ const ProductList = ({ products, onProductDeleted }) => {
       )}
       {isModalOpen && selectedProduct && (
         <Modal product={selectedProduct} closeModal={closeModal} />
+      )}
+      {isEditModalOpen && editingProduct && (
+        <EditProductModal
+          product={editingProduct}
+          onClose={handleEditClose}
+          onProductUpdated={handleProductUpdated}
+        />
       )}
       <AlertModal
         message={alert.message}
